@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вторая жизнь ткани — Ultimate Edition</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --accent: #43a047; --accent-dark: #2e7d32; --accent-light: #a5d6a7;
+    --bg1: #e8f5e9; --bg2: #c8e6c9; --bg3: #a5d6a7;
+    --card-bg: #f9fbe7; --card-border: #dcedc8;
+    --text: #1b5e20; --text-soft: #558b2f;
+    --amber: #ffb300; --red: #c62828; --blue: #1565c0;
+    --purple: #6a1b9a; --pink: #c2185b;
+  }
+  body.skin-forest   { --accent:#43a047; --accent-dark:#1b5e20; --accent-light:#a5d6a7; --bg1:#e8f5e9; --bg2:#c8e6c9; --bg3:#a5d6a7; --card-bg:#f1f8e9; --card-border:#dcedc8; --text:#1b5e20; --text-soft:#558b2f; }
+  body.skin-ocean    { --accent:#0288d1; --accent-dark:#01579b; --accent-light:#81d4fa; --bg1:#e1f5fe; --bg2:#b3e5fc; --bg3:#81d4fa; --card-bg:#e3f2fd; --card-border:#b3e5fc; --text:#01579b; --text-soft:#0277bd; }
+  body.skin-sunset   { --accent:#f4511e; --accent-dark:#bf360c; --accent-light:#ffab91; --bg1:#fbe9e7; --bg2:#ffccbc; --bg3:#ffab91; --card-bg:#fff3e0; --card-border:#ffccbc; --text:#bf360c; --text-soft:#d84315; }
+  body.skin-night    { --accent:#7e57c2; --accent-dark:#4527a0; --accent-light:#b39ddb; --bg1:#ede7f6; --bg2:#d1c4e9; --bg3:#b39ddb; --card-bg:#f3e5f5; --card-border:#d1c4e9; --text:#311b92; --text-soft:#512da8; }
+  body.skin-spring   { --accent:#8bc34a; --accent-dark:#558b2f; --accent-light:#dcedc8; --bg1:#f1f8e9; --bg2:#dcedc8; --bg3:#c5e1a5; --card-bg:#f9fbe7; --card-border:#dcedc8; --text:#33691e; --text-soft:#689f38; }
+  body.skin-mint     { --accent:#26a69a; --accent-dark:#00695c; --accent-light:#80cbc4; --bg1:#e0f2f1; --bg2:#b2dfdb; --bg3:#80cbc4; --card-bg:#e0f2f1; --card-border:#b2dfdb; --text:#004d40; --text-soft:#00796b; }
+  body.skin-autumn   { --accent:#ff7043; --accent-dark:#d84315; --accent-light:#ffab91; --bg1:#fff3e0; --bg2:#ffe0b2; --bg3:#ffcc80; --card-bg:#fff8e1; --card-border:#ffcc80; --text:#bf360c; --text-soft:#e64a19; }
+  body.skin-lavender { --accent:#9575cd; --accent-dark:#5e35b1; --accent-light:#b39ddb; --bg1:#f3e5f5; --bg2:#e1bee7; --bg3:#ce93d8; --card-bg:#f3e5f5; --card-border:#e1bee7; --text:#4a148c; --text-soft:#6a1b9a; }
+  body.skin-coral    { --accent:#ec407a; --accent-dark:#ad1457; --accent-light:#f48fb1; --bg1:#fce4ec; --bg2:#f8bbd0; --bg3:#f48fb1; --card-bg:#fce4ec; --card-border:#f8bbd0; --text:#880e4f; --text-soft:#c2185b; }
+  body.skin-ice      { --accent:#4dd0e1; --accent-dark:#00838f; --accent-light:#b2ebf2; --bg1:#e0f7fa; --bg2:#b2ebf2; --bg3:#80deea; --card-bg:#e0f7fa; --card-border:#b2ebf2; --text:#006064; --text-soft:#00838f; }
+  body.skin-sand     { --accent:#c0a062; --accent-dark:#8d6e63; --accent-light:#e6d5b8; --bg1:#faf3e0; --bg2:#f0e6d2; --bg3:#e6d5b8; --card-bg:#faf3e0; --card-border:#e6d5b8; --text:#6d4c41; --text-soft:#8d6e63; }
+  body.skin-cherry   { --accent:#e53935; --accent-dark:#b71c1c; --accent-light:#ef9a9a; --bg1:#ffebee; --bg2:#ffcdd2; --bg3:#ef9a9a; --card-bg:#ffebee; --card-border:#ffcdd2; --text:#7f0000; --text-soft:#c62828; }
+  body.skin-lime     { --accent:#aeea00; --accent-dark:#827717; --accent-light:#e6ee9c; --bg1:#f9fbe7; --bg2:#f0f4c3; --bg3:#e6ee9c; --card-bg:#f9fbe7; --card-border:#f0f4c3; --text:#827717; --text-soft:#9e9d24; }
+  body.skin-earth    { --accent:#8d6e63; --accent-dark:#4e342e; --accent-light:#bcaaa4; --bg1:#efebe9; --bg2:#d7ccc8; --bg3:#bcaaa4; --card-bg:#efebe9; --card-border:#d7ccc8; --text:#3e2723; --text-soft:#5d4037; }
+  body.skin-aurora   { --accent:#00bfa5; --accent-dark:#00695c; --accent-light:#a7ffeb; --bg1:#e0f2f1; --bg2:#b2dfdb; --bg3:#a7ffeb; --card-bg:#e0f2f1; --card-border:#b2dfdb; --text:#004d40; --text-soft:#00897b; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+    min-height: 100vh; padding: 12px; color: var(--text);
+    display: flex; justify-content: center; align-items: flex-start;
+    transition: background 0.6s;
+  }
+  .app {
+    background: #fff; border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    max-width: 920px; width: 100%; padding: 22px;
+    min-height: 660px; position: relative; overflow: hidden;
+  }
+  h1 { text-align: center; font-size: 1.55em; color: var(--accent-dark); margin-bottom: 3px; }
+  .tagline { text-align: center; color: var(--text-soft); font-size: 0.8em; margin-bottom: 10px; }
+
+  .hud {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
+    background: var(--card-bg); border-radius: 14px; padding: 7px 8px;
+    margin-bottom: 8px; font-size: 0.78em;
+  }
+  .hud-item { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .hud-label { color: var(--text-soft); font-size: 0.7em; text-transform: uppercase; }
+  .hud-value { font-weight: 700; font-size: 1em; color: var(--accent-dark); }
+  .hud-value.star { color: var(--amber); }
+  .hud-value.energy { color: var(--blue); }
+  .hud-value.level { color: var(--purple); }
+  .hud-value.streak { color: var(--pink); }
+
+  .xp-bar { height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; margin-bottom: 10px; }
+  .xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent-light), var(--accent)); transition: width 0.4s; width: 0%; }
+
+  .screen { display: none; animation: fadeIn 0.3s; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff; border: none; padding: 10px 20px; border-radius: 12px;
+    font-size: 0.9em; font-weight: 600; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: inline-block; font-family: inherit;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.2); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn.full { display: block; width: 100%; margin-top: 10px; }
+  .btn.gray { background: linear-gradient(135deg, #90a4ae, #546e7a); }
+  .btn.amber { background: linear-gradient(135deg, #ffca28, #f57f17); color: #4e342e; }
+  .btn.red { background: linear-gradient(135deg, #ef5350, #c62828); }
+
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .menu-card {
+    background: var(--card-bg); border: 2px solid var(--card-border);
+    border-radius: 14px; padding: 12px 10px; text-align: center;
+    cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .menu-card:hover:not(.disabled) { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  .menu-card.disabled { opacity: 0.45; cursor: not-allowed; }
+  .menu-icon { font-size: 2em; margin-bottom: 3px; display: block; }
+  .menu-title { font-weight: 700; color: var(--accent-dark); margin-bottom: 2px; font-size: 0.9em; }
+  .menu-desc { font-size: 0.7em; color: var(--text-soft); line-height: 1.3; }
+  .menu-badge {
+    display: inline-block; background: var(--amber); color: #4e342e;
+    font-size: 0.65em; font-weight: 700; padding: 2px 7px;
+    border-radius: 10px; margin-top: 4px;
+  }
+  .menu-badge.new { background: var(--pink); color: #fff; }
+  .menu-badge.red { background: var(--red); color: #fff; }
+
+  .item-display { text-align: center; font-size: 4.5em; margin: 10px 0 5px; animation: float 2.5s ease-in-out infinite; min-height: 80px; }
+  @keyframes float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+  .item-name { text-align: center; font-size: 1.15em; font-weight: 700; margin-bottom: 2px; }
+  .item-hint { text-align: center; font-size: 0.8em; color: var(--text-soft); margin-bottom: 10px; font-style: italic; }
+  .bins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 7px; }
+  .bin {
+    background: var(--card-bg); border: 3px dashed var(--accent-light);
+    border-radius: 14px; padding: 10px 4px; text-align: center;
+    cursor: pointer; transition: all 0.15s; font-weight: 600;
+    font-size: 0.78em; color: var(--accent-dark);
+  }
+  .bin:hover { background: var(--card-border); border-color: var(--accent); transform: translateY(-2px); }
+  .bin:active { transform: scale(0.96); }
+  .bin .bin-icon { font-size: 1.7em; display: block; margin-bottom: 2px; }
+
+  .feedback {
+    text-align: center; font-weight: 600; font-size: 0.88em;
+    min-height: 36px; margin-top: 8px; padding: 6px;
+    border-radius: 10px; transition: all 0.2s;
+  }
+  .feedback.correct { color: var(--accent-dark); background: var(--accent-light); }
+  .feedback.wrong { color: #b71c1c; background: #ffcdd2; }
+  .feedback.info { color: #0d47a1; background: #bbdefb; }
+
+  .timer-bar { height: 6px; background: #ffcdd2; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .timer-fill { height: 100%; background: linear-gradient(90deg, #66bb6a, #ffeb3b, #f44336); width: 100%; transition: width 0.1s linear; }
+
+  .quiz-q {
+    font-size: 0.95em; font-weight: 600; line-height: 1.45;
+    margin-bottom: 10px; padding: 11px;
+    background: var(--card-bg); border-radius: 12px;
+    border-left: 4px solid var(--accent);
+  }
+  .answers { display: grid; gap: 7px; }
+  .answer {
+    background: #fff; border: 2px solid var(--card-border);
+    border-radius: 12px; padding: 9px 13px; cursor: pointer;
+    transition: all 0.15s; text-align: left; font-size: 0.88em;
+    font-family: inherit; color: inherit;
+  }
+  .answer:hover:not(:disabled) { background: var(--card-bg); border-color: var(--accent); transform: translateX(3px); }
+  .answer.correct { background: var(--accent-light); border-color: var(--accent); }
+  .answer.wrong { background: #ffcdd2; border-color: #e53935; }
+  .answer:disabled { cursor: default; }
+
+  .fact-card {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 2px solid var(--amber); border-radius: 14px;
+    padding: 11px 13px; margin: 9px 0; font-size: 0.84em;
+    line-height: 1.45; color: #4e342e;
+  }
+  .fact-card b { color: #e65100; }
+
+  .shop-grid { display: grid; grid-template-columns: 1fr; gap: 7px; max-height: 440px; overflow-y: auto; padding-right: 4px; }
+  .shop-item {
+    display: flex; gap: 10px; align-items: center;
+    background: var(--card-bg); border: 2px solid var(--card-border);
+    border-radius: 14px; padding: 9px 11px;
+  }
+  .shop-item.owned { background: var(--accent-light); border-color: var(--accent); }
+  .shop-emoji { font-size: 1.7em; flex-shrink: 0; }
+  .shop-info { flex: 1; }
+  .shop-name { font-weight: 700; font-size: 0.88em; margin-bottom: 1px; }
+  .shop-desc { font-size: 0.72em; color: var(--text-soft); line-height: 1.3; }
+  .shop-buy {
+    background: var(--accent); color: #fff; border: none;
+    border-radius: 10px; padding: 6px 10px; font-weight: 700;
+    cursor: pointer; font-size: 0.78em; white-space: nowrap; font-family: inherit;
+  }
+  .shop-buy:disabled { background: #bdbdbd; cursor: not-allowed; }
+  .shop-buy.owned { background: #66bb6a; }
+
+  .final { text-align: center; padding: 6px 0; }
+  .final-icon { font-size: 3.8em; margin: 5px 0; animation: pop 0.5s; }
+  @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+  .final-title { font-size: 1.25em; color: var(--accent-dark); margin-bottom: 8px; }
+  .final-score { font-size: 1.9em; font-weight: 700; color: var(--accent-dark); margin: 5px 0; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 10px 0; text-align: left; }
+  .stat-line { background: var(--card-bg); border-radius: 10px; padding: 7px 10px; font-size: 0.78em; }
+  .stat-line b { color: var(--accent-dark); }
+
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; min-height: 28px; gap: 6px; flex-wrap: wrap; }
+  .back-btn {
+    background: #e0e0e0; border: none; border-radius: 10px;
+    padding: 5px 10px; font-weight: 600; cursor: pointer;
+    font-size: 0.78em; color: #333; font-family: inherit;
+  }
+  .back-btn:hover { background: #bdbdbd; }
+  .level-pill { background: var(--purple); color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 0.72em; font-weight: 700; }
+
+  .dots { display: flex; justify-content: center; gap: 3px; margin-bottom: 7px; flex-wrap: wrap; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--card-border); transition: all 0.3s; }
+  .dot.done { background: var(--accent); }
+  .dot.current { background: var(--amber); transform: scale(1.4); }
+  .dot.wrong { background: #e57373; }
+
+  .constructor-area { display: grid; grid-template-columns: 200px 1fr; gap: 12px; margin: 8px 0; min-height: 320px; }
+  .parts-tray {
+    background: var(--card-bg); border: 2px dashed var(--card-border);
+    border-radius: 14px; padding: 8px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+    align-content: start; max-height: 380px; overflow-y: auto;
+  }
+  .part {
+    background: #fff; border: 2px solid var(--card-border);
+    border-radius: 10px; padding: 6px 3px; text-align: center;
+    cursor: grab; font-size: 1.5em; user-select: none;
+    transition: all 0.15s; touch-action: none;
+  }
+  .part:hover:not(.used) { border-color: var(--accent); transform: scale(1.08); }
+  .part.used { opacity: 0.25; cursor: default; pointer-events: none; }
+  .part.hint-highlight {
+    border-color: var(--amber) !important;
+    box-shadow: 0 0 12px rgba(255, 179, 0, 0.8);
+    animation: hintPulse 1.2s ease-in-out infinite;
+  }
+  @keyframes hintPulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 8px rgba(255,179,0,0.6); }
+    50% { transform: scale(1.1); box-shadow: 0 0 16px rgba(255,179,0,1); }
+  }
+  .part.dragging { opacity: 0.4; }
+
+  .workspace {
+    background: linear-gradient(135deg, var(--card-bg), var(--card-border));
+    border: 3px solid var(--accent); border-radius: 16px;
+    padding: 10px; min-height: 320px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; transition: all 0.2s;
+  }
+  .workspace.over { background: var(--accent-light); border-style: dashed; transform: scale(1.01); }
+  .workspace-hint {
+    color: var(--text-soft); text-align: center; font-size: 0.85em;
+    line-height: 1.4; position: absolute; top: 10px; left: 10px; right: 10px;
+  }
+  .workspace-items {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: center; align-items: center;
+    margin-top: 28px; z-index: 1; min-height: 80px;
+  }
+  .placed-item { font-size: 2.6em; animation: drop 0.35s; cursor: pointer; position: relative; }
+  .placed-item:hover::after {
+    content: '✕'; position: absolute; top: -5px; right: -5px;
+    background: #e53935; color: #fff; border-radius: 50%;
+    width: 18px; height: 18px; font-size: 0.4em; display: flex;
+    align-items: center; justify-content: center;
+  }
+  @keyframes drop { 0% { transform: scale(0) translateY(-40px); } 100% { transform: scale(1) translateY(0); } }
+  .target-info {
+    margin-top: 10px; text-align: center; font-size: 0.85em; font-weight: 600;
+    color: var(--accent-dark); padding: 8px;
+    background: #fff; border-radius: 10px; border: 2px solid var(--card-border);
+    min-width: 200px;
+  }
+  .target-info.no-hint { color: var(--text-soft); background: #fff; border-color: var(--card-border); }
+  .target-info.show-hint {
+    background: #fff8e1; border-color: var(--amber);
+    animation: hintPulseBox 1.5s ease-in-out infinite;
+  }
+  @keyframes hintPulseBox {
+    0%,100% { box-shadow: 0 0 0 rgba(255,179,0,0); }
+    50% { box-shadow: 0 0 12px rgba(255,179,0,0.6); }
+  }
+  .need-pills { display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
+  .need-pill {
+    background: #fff; border: 2px dashed var(--card-border);
+    border-radius: 8px; padding: 3px 8px; font-size: 0.8em; font-weight: 700;
+    color: var(--text-soft);
+  }
+  .need-pill.filled {
+    background: var(--accent-light); border-style: solid; border-color: var(--accent);
+    color: var(--accent-dark);
+  }
+  .hint-box {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 2px solid var(--amber); border-radius: 12px;
+    padding: 10px 12px; margin-top: 8px; font-size: 0.85em;
+    color: #4e342e; line-height: 1.5;
+    animation: fadeIn 0.4s;
+  }
+  .hint-box b { color: #e65100; }
+  .constructor-actions { display: flex; gap: 6px; margin-top: 8px; justify-content: center; }
+  .constructor-actions button { flex: 1; }
+
+  .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 480px; overflow-y: auto; padding-right: 4px; }
+  .ach-card {
+    background: var(--card-bg); border: 2px solid var(--card-border);
+    border-radius: 12px; padding: 8px; display: flex;
+    gap: 7px; align-items: center; opacity: 0.55; transition: all 0.3s;
+  }
+  .ach-card.unlocked { opacity: 1; background: linear-gradient(135deg, #fff8e1, var(--accent-light)); border-color: var(--amber); }
+  .ach-icon { font-size: 1.5em; flex-shrink: 0; }
+  .ach-name { font-weight: 700; font-size: 0.76em; color: var(--accent-dark); }
+  .ach-desc { font-size: 0.65em; color: var(--text-soft); line-height: 1.3; }
+
+  .lb-row {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card-bg); border: 2px solid var(--card-border);
+    border-radius: 12px; padding: 9px 12px; margin-bottom: 5px;
+  }
+  .lb-row.you { background: var(--accent-light); border-color: var(--accent); }
+  .lb-rank { font-size: 1.1em; font-weight: 700; width: 28px; text-align: center; color: var(--accent-dark); }
+  .lb-name { flex: 1; font-weight: 600; font-size: 0.85em; }
+  .lb-score { font-weight: 700; color: var(--amber); font-size: 0.95em; }
+
+  .daily-list { display: grid; gap: 7px; margin-top: 8px; }
+  .daily-item {
+    background: var(--card-bg); border: 2px solid var(--card-border);
+    border-radius: 12px; padding: 9px 11px;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .daily-item.done { background: var(--accent-light); border-color: var(--accent); }
+  .daily-icon { font-size: 1.6em; }
+  .daily-info { flex: 1; }
+  .daily-name { font-weight: 700; font-size: 0.85em; }
+  .daily-desc { font-size: 0.72em; color: var(--text-soft); line-height: 1.3; }
+  .daily-progress { font-size: 0.72em; color: var(--accent-dark); font-weight: 700; margin-top: 2px; }
+  .daily-claim {
+    background: var(--amber); color: #4e342e; border: none;
+    border-radius: 10px; padding: 5px 10px; font-weight: 700;
+    cursor: pointer; font-size: 0.72em; font-family: inherit;
+  }
+  .daily-claim:disabled { background: #bdbdbd; cursor: not-allowed; }
+  .daily-claim.claimed { background: #66bb6a; color: #fff; }
+
+  .skin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 10px; max-height: 500px; overflow-y: auto; padding-right: 4px; }
+  .skin-card {
+    border: 3px solid transparent; border-radius: 16px;
+    padding: 10px 6px; text-align: center; cursor: pointer;
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .skin-card:hover:not(.locked) { transform: translateY(-3px); }
+  .skin-card.active { border-color: var(--accent); transform: scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+  .skin-preview {
+    width: 72px; height: 72px; border-radius: 50%;
+    margin: 0 auto 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2em; border: 3px solid rgba(255,255,255,0.6);
+    transition: transform 0.3s;
+  }
+  .skin-card:hover .skin-preview { transform: rotate(8deg) scale(1.05); }
+  .skin-name { font-size: 0.74em; font-weight: 700; color: var(--accent-dark); margin-bottom: 2px; }
+  .skin-desc { font-size: 0.62em; color: var(--text-soft); line-height: 1.2; }
+  .skin-card.locked { opacity: 0.55; cursor: not-allowed; }
+  .skin-lock {
+    position: absolute; top: 6px; right: 8px;
+    font-size: 0.9em; background: rgba(0,0,0,0.5);
+    color: #fff; border-radius: 50%; width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .skin-unlock { font-size: 0.6em; color: var(--text-soft); margin-top: 3px; }
+
+  .lang-row { display: flex; gap: 5px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .lang-btn {
+    background: #fff; border: 2px solid var(--card-border);
+    border-radius: 8px; padding: 3px 9px; font-weight: 700;
+    font-size: 0.75em; cursor: pointer; font-family: inherit; color: var(--text-soft);
+  }
+  .lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .toast-container { position: fixed; top: 16px; right: 16px; z-index: 999; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
+  .toast {
+    background: var(--accent-dark); color: #fff; padding: 9px 14px;
+    border-radius: 12px; font-weight: 600; font-size: 0.82em;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    animation: toastIn 0.3s; max-width: 250px; line-height: 1.35;
+  }
+  .toast.amber { background: var(--amber); color: #4e342e; }
+  .toast.purple { background: var(--purple); }
+  .toast.pink { background: var(--pink); }
+  .toast.red { background: var(--red); }
+  @keyframes toastIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
+
+  .progress-info { text-align:center; font-size:0.78em; color: var(--text-soft); margin-bottom:6px; }
+
+  @media (max-width: 560px) {
+    .app { padding: 12px; }
+    h1 { font-size: 1.25em; }
+    .hud { grid-template-columns: repeat(3, 1fr); font-size: 0.7em; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .item-display { font-size: 3.5em; }
+    .constructor-area { grid-template-columns: 1fr; }
+    .parts-tray { grid-template-columns: repeat(4, 1fr); max-height: 150px; }
+    .skin-grid { grid-template-columns: 1fr 1fr; }
+    .ach-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="skin-forest">
+<div class="toast-container" id="toastBox"></div>
+<div class="app">
+  <h1 id="title">🧵 Вторая жизнь ткани</h1>
+  <p class="tagline" id="tagline">Эко-симулятор переработки текстиля</p>
+
+  <div class="hud" id="hud" style="display:none;">
+    <div class="hud-item"><span class="hud-label" data-i18n="level">Уровень</span><span class="hud-value level" id="hudLevel">1</span></div>
+    <div class="hud-item"><span class="hud-label" data-i18n="score">Очки</span><span class="hud-value star" id="hudScore">0</span></div>
+    <div class="hud-item"><span class="hud-label" data-i18n="energy">Энергия</span><span class="hud-value energy" id="hudEnergy">10/10</span></div>
+    <div class="hud-item"><span class="hud-label" data-i18n="streak">Серия</span><span class="hud-value streak" id="hudStreak">0 🔥</span></div>
+    <div class="hud-item"><span class="hud-label" data-i18n="record">Рекорд</span><span class="hud-value" id="hudRecord">0</span></div>
+  </div>
+  <div class="xp-bar" id="xpBar" style="display:none;"><div class="xp-fill" id="xpFill"></div></div>
+
+  <div class="screen active" id="screenStart">
+    <div class="lang-row">
+      <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">🇷🇺 RU</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">🇪🇸 ES</button>
+    </div>
+    <div style="text-align:center; font-size:3.5em; margin:6px 0; animation:float 3s ease-in-out infinite;">🌍👕♻️</div>
+    <p style="text-align:center; line-height:1.5; font-size:0.92em;" id="introText"></p>
+    <div class="fact-card" id="introFact"></div>
+    <button class="btn full" onclick="startNewGame()" id="startBtn"></button>
+    <button class="btn gray full" onclick="loadGame()" id="loadBtn" style="display:none;"></button>
+  </div>
+
+  <div class="screen" id="screenMenu">
+    <div class="menu-grid">
+      <div class="menu-card" id="cardSort" onclick="startLevel('sort')">
+        <span class="menu-icon">👕</span>
+        <div class="menu-title" data-i18n="sort">Сортировка</div>
+        <div class="menu-desc" data-i18n="sortDesc">Непредсказуемые предметы</div>
+        <div class="menu-badge" id="badgeSort">−1 ⚡</div>
+      </div>
+      <div class="menu-card" id="cardQuiz" onclick="startLevel('quiz')">
+        <span class="menu-icon">🧠</span>
+        <div class="menu-title" data-i18n="quiz">Викторина</div>
+        <div class="menu-desc" data-i18n="quizDesc">Проверь знания об экологии</div>
+        <div class="menu-badge" id="badgeQuiz">−1 ⚡</div>
+      </div>
+      <div class="menu-card" id="cardUpcycle" onclick="startLevel('upcycle')">
+        <span class="menu-icon">✂️</span>
+        <div class="menu-title" data-i18n="upcycle">Апсайклинг</div>
+        <div class="menu-desc" data-i18n="upcycleDesc">Выбери, что сделать из вещи</div>
+        <div class="menu-badge" id="badgeUpcycle">−2 ⚡</div>
+      </div>
+      <div class="menu-card" id="cardConstructor" onclick="startLevel('constructor')">
+        <span class="menu-icon">🧩</span>
+        <div class="menu-title" data-i18n="constructor">Конструктор</div>
+        <div class="menu-desc" data-i18n="constructorDesc">Собери новую вещь из деталей</div>
+        <div class="menu-badge" id="badgeConstructor">−3 ⚡</div>
+      </div>
+      <div class="menu-card" onclick="openDaily()">
+        <span class="menu-icon">📅</span>
+        <div class="menu-title" data-i18n="daily">Задания дня</div>
+        <div class="menu-desc" data-i18n="dailyDesc">Ежедневные цели и награды</div>
+        <div class="menu-badge" id="badgeDaily">0/3</div>
+      </div>
+      <div class="menu-card" onclick="openAchievements()">
+        <span class="menu-icon">🏆</span>
+        <div class="menu-title" data-i18n="achievements">Достижения</div>
+        <div class="menu-desc" data-i18n="achDesc">30 эко-подвигов</div>
+        <div class="menu-badge" id="badgeAch">0/30</div>
+      </div>
+      <div class="menu-card" onclick="openLeaderboard()">
+        <span class="menu-icon">👥</span>
+        <div class="menu-title" data-i18n="leaders">Рекорды</div>
+        <div class="menu-desc" data-i18n="leadersDesc">Таблица лидеров</div>
+        <div class="menu-badge" id="badgeRecord">0</div>
+      </div>
+      <div class="menu-card" onclick="openShop()">
+        <span class="menu-icon">🛒</span>
+        <div class="menu-title" data-i18n="shop">Магазин</div>
+        <div class="menu-desc" data-i18n="shopDesc">Улучшения и бонусы</div>
+        <div class="menu-badge">⭐</div>
+      </div>
+      <div class="menu-card" onclick="openSkins()">
+        <span class="menu-icon">🎨</span>
+        <div class="menu-title" data-i18n="skins">Скины</div>
+        <div class="menu-desc" data-i18n="skinsDesc">15 эко-картинок</div>
+        <div class="menu-badge" id="badgeSkins">1/15</div>
+      </div>
+      <div class="menu-card" onclick="resetProgress()">
+        <span class="menu-icon">🔄</span>
+        <div class="menu-title" data-i18n="reset">Сброс</div>
+        <div class="menu-desc" data-i18n="resetDesc">Начать всё заново</div>
+        <div class="menu-badge red">⚠</div>
+      </div>
+    </div>
+    <div class="fact-card" style="margin-top:10px; font-size:0.82em;" id="dailyFactBox"></div>
+  </div>
+
+  <div class="screen" id="screenSort">
+    <div class="topbar">
+      <button class="back-btn" onclick="quitLevel()">← <span data-i18n="exit">Выход</span></button>
+      <span class="level-pill" id="sortLevelPill">Уровень 1</span>
+    </div>
+    <div class="dots" id="sortDots"></div>
+    <div class="timer-bar" id="sortTimerWrap" style="display:none;"><div class="timer-fill" id="sortTimerFill"></div></div>
+    <div class="progress-info" id="sortProgressInfo"></div>
+    <div class="item-display" id="sortIcon">👕</div>
+    <div class="item-name" id="sortName"></div>
+    <div class="item-hint" id="sortHint"></div>
+    <div class="bins">
+      <div class="bin" onclick="answerSort('recycle')"><span class="bin-icon">♻️</span><span data-i18n="binRecycle">Переработка</span></div>
+      <div class="bin" onclick="answerSort('reuse')"><span class="bin-icon">🤝</span><span data-i18n="binReuse">Отдать / починить</span></div>
+      <div class="bin" onclick="answerSort('trash')"><span class="bin-icon">🗑️</span><span data-i18n="binTrash">Мусор</span></div>
+    </div>
+    <div class="feedback" id="sortFeedback"></div>
+  </div>
+
+  <div class="screen" id="screenQuiz">
+    <div class="topbar">
+      <button class="back-btn" onclick="quitLevel()">← <span data-i18n="exit">Выход</span></button>
+      <span class="level-pill" id="quizLevelPill">Викторина</span>
+    </div>
+    <div class="dots" id="quizDots"></div>
+    <div class="timer-bar" id="quizTimerWrap" style="display:none;"><div class="timer-fill" id="quizTimerFill"></div></div>
+    <div class="progress-info" id="quizProgressInfo"></div>
+    <div class="quiz-q" id="quizQ"></div>
+    <div class="answers" id="quizAnswers"></div>
+    <div id="quizFactBox"></div>
+  </div>
+
+  <div class="screen" id="screenUpcycle">
+    <div class="topbar">
+      <button class="back-btn" onclick="quitLevel()">← <span data-i18n="exit">Выход</span></button>
+      <span class="level-pill">✂️ <span data-i18n="upcycle">Апсайклинг</span></span>
+    </div>
+    <div class="progress-info" id="upcycleProgressInfo"></div>
+    <p style="text-align:center; color:var(--text-soft); font-size:0.85em; margin-bottom:10px;" data-i18n="upcycleQ">Что можно сделать из этого предмета? Выбери лучший вариант!</p>
+    <div class="item-display" id="upcycleIcon">👕</div>
+    <div class="item-name" id="upcycleName"></div>
+    <div class="answers" id="upcycleAnswers" style="margin-top:12px;"></div>
+    <div class="feedback" id="upcycleFeedback"></div>
+  </div>
+
+  <div class="screen" id="screenConstructor">
+    <div class="topbar">
+      <button class="back-btn" onclick="quitLevel()">← <span data-i18n="exit">Выход</span></button>
+      <span class="level-pill">🧩 <span data-i18n="constructor">Конструктор</span></span>
+    </div>
+    <div class="progress-info" id="constructorProgressInfo"></div>
+    <p style="text-align:center; color:var(--text-soft); font-size:0.82em; margin-bottom:8px;" data-i18n="constructorQ">Собери вещь из нескольких деталей по названию</p>
+    <div class="constructor-area">
+      <div class="parts-tray" id="partsTray"></div>
+      <div class="workspace" id="workspace" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="workspace-hint" id="workspaceHint"></div>
+        <div class="workspace-items" id="workspaceItems"></div>
+        <div class="target-info" id="targetInfo"></div>
+      </div>
+    </div>
+    <div class="constructor-actions">
+      <button class="btn red" onclick="clearWorkspace()" id="clearBtn">🗑 Очистить</button>
+      <button class="btn amber" onclick="checkConstructor()" id="checkBtn">✓ Проверить</button>
+    </div>
+    <div id="hintBoxWrap"></div>
+    <div class="feedback" id="constructorFeedback"></div>
+  </div>
+
+  <div class="screen" id="screenShop">
+    <div class="topbar">
+      <button class="back-btn" onclick="show('screenMenu')">← <span data-i18n="back">Назад</span></button>
+      <span class="level-pill">⭐ <span data-i18n="score">Очки</span>: <b id="shopScore">0</b></span>
+    </div>
+    <div class="shop-grid" id="shopGrid"></div>
+  </div>
+
+  <div class="screen" id="screenSkins">
+    <div class="topbar">
+      <button class="back-btn" onclick="show('screenMenu')">← <span data-i18n="back">Назад</span></button>
+      <span class="level-pill">🎨 <span data-i18n="skins">Скины</span>: <b id="skinCounter">1/15</b></span>
+    </div>
+    <p style="text-align:center; font-size:0.85em; color:var(--text-soft); margin-bottom:8px;" data-i18n="skinsQ">15 эко-тем. Новые открываются за уровни и достижения!</p>
+    <div class="skin-grid" id="skinGrid"></div>
+  </div>
+
+  <div class="screen" id="screenAch">
+    <div class="topbar">
+      <button class="back-btn" onclick="show('screenMenu')">← <span data-i18n="back">Назад</span></button>
+      <span class="level-pill">🏆 <span id="achCounter">0/30</span></span>
+    </div>
+    <div class="ach-grid" id="achGrid"></div>
+  </div>
+
+  <div class="screen" id="screenLeaderboard">
+    <div class="topbar">
+      <button class="back-btn" onclick="show('screenMenu')">← <span data-i18n="back">Назад</span></button>
+      <span class="level-pill">👥 <span data-i18n="leaders">Рекорды</span></span>
+    </div>
+    <p style="text-align:center; font-size:0.82em; color:var(--text-soft); margin-bottom:10px;" data-i18n="leadersQ">Сравни себя с другими эко-героями</p>
+    <div id="lbList"></div>
+  </div>
+
+  <div class="screen" id="screenDaily">
+    <div class="topbar">
+      <button class="back-btn" onclick="show('screenMenu')">← <span data-i18n="back">Назад</span></button>
+      <span class="level-pill">📅 <span data-i18n="daily">Задания дня</span></span>
+    </div>
+    <p style="text-align:center; font-size:0.82em; color:var(--text-soft); margin-bottom:6px;" data-i18n="dailyQ">Задания обновляются каждый день</p>
+    <div class="daily-list" id="dailyList"></div>
+  </div>
+
+  <div class="screen" id="screenComplete">
+    <div class="final">
+      <div class="final-icon" id="completeIcon">🎉</div>
+      <div class="final-title" id="completeTitle">Уровень пройден!</div>
+      <div class="final-score" id="completeScore">+0</div>
+      <div class="stats-grid" id="completeStats"></div>
+      <div class="fact-card" id="completeFact"></div>
+      <button class="btn full" onclick="backToMenu()" id="continueBtn"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   I18N
+   ============================================================ */
+const I18N = {
+  ru: { title:"🧵 Вторая жизнь ткани", tagline:"Эко-симулятор переработки текстиля",
+    level:"Уровень", score:"Очки", energy:"Энергия", streak:"Серия", record:"Рекорд",
+    intro:"Каждый год мир выбрасывает <b>92 миллиона тонн</b> текстиля.<br>Стань эко-героем: сортируй, перерабатывай и узнавай, как подарить вещам вторую жизнь!",
+    introFact:"💡 <b>Факт:</b> На одну хлопковую футболку уходит <b>2700 литров воды</b> — столько человек выпивает за 2,5 года.",
+    start:"🌱 Начать приключение", load:"📂 Продолжить", back:"Назад", exit:"Выход",
+    sort:"Сортировка", sortDesc:"Непредсказуемые предметы",
+    quiz:"Викторина", quizDesc:"Проверь знания об экологии",
+    upcycle:"Апсайклинг", upcycleDesc:"Выбери, что сделать из вещи",
+    constructor:"Конструктор", constructorDesc:"Собери новую вещь из деталей",
+    daily:"Задания дня", dailyDesc:"Ежедневные цели и награды",
+    achievements:"Достижения", achDesc:"30 эко-подвигов",
+    leaders:"Рекорды", leadersDesc:"Таблица лидеров",
+    shop:"Магазин", shopDesc:"Улучшения и бонусы",
+    skins:"Скины", skinsDesc:"15 эко-картинок",
+    reset:"Сброс", resetDesc:"Начать всё заново",
+    binRecycle:"Переработка", binReuse:"Отдать / починить", binTrash:"Мусор",
+    upcycleQ:"Что можно сделать из этого предмета? Выбери лучший вариант!",
+    constructorQ:"Собери вещь из нескольких деталей по названию",
+    skinsQ:"15 эко-тем. Новые открываются за уровни и достижения!",
+    leadersQ:"Сравни себя с другими эко-героями",
+    dailyQ:"Задания обновляются каждый день",
+    continue:"Продолжить →", timeOut:"⏱️ Время вышло!", correct:"✅ Верно!", wrong:"❌ Неверно.",
+    streakBonus:"🔥 Серия ×", perfect:"Идеально!", noEnergy:"Не хватает энергии! ⚡",
+    claim:"Забрать", claimed:"Получено", progress:"Прогресс", dayDone:"Все задания выполнены!",
+    confirmReset:"Сбросить весь прогресс? Это действие нельзя отменить.",
+    points:"очков", you:"Ты", dragHere:"Перетащи детали сюда",
+    check:"Проверить", clear:"Очистить", needMore:"Нужно больше деталей:",
+    success:"✅ Отлично! +", notEnough:"❌ Не те детали. Попробуй ещё!",
+    round:"Раунд", of:"из", item:"Предмет", question:"Вопрос", recipe:"Рецепт",
+    newSkin:"🎨 Новый скин:", newAch:"🏆 Достижение:",
+    needPills:"Нужные компоненты:",
+    hintTitle:"💡 Подсказка",
+    hintText:"Попыток было 3 — вот подсказка. Нужные детали подсвечены жёлтым!",
+    hintText2:"Уже использовано 3 попытки. Смотри на подсвеченные детали.",
+  },
+  en: { title:"🧵 Textile's Second Life", tagline:"Eco-simulator of textile recycling",
+    level:"Level", score:"Score", energy:"Energy", streak:"Streak", record:"Record",
+    intro:"Every year the world throws away <b>92 million tons</b> of textiles.<br>Become an eco-hero: sort, recycle and learn how to give things a second life!",
+    introFact:"💡 <b>Fact:</b> One cotton T-shirt takes <b>2700 liters of water</b> — what a person drinks in 2.5 years.",
+    start:"🌱 Start adventure", load:"📂 Continue", back:"Back", exit:"Exit",
+    sort:"Sorting", sortDesc:"Unpredictable items",
+    quiz:"Quiz", quizDesc:"Test your eco-knowledge",
+    upcycle:"Upcycling", upcycleDesc:"Choose what to make from an item",
+    constructor:"Constructor", constructorDesc:"Build a new item from parts",
+    daily:"Daily tasks", dailyDesc:"Daily goals and rewards",
+    achievements:"Achievements", achDesc:"30 eco-feats",
+    leaders:"Records", leadersDesc:"Leaderboard",
+    shop:"Shop", shopDesc:"Upgrades and bonuses",
+    skins:"Skins", skinsDesc:"15 eco-pictures",
+    reset:"Reset", resetDesc:"Start over",
+    binRecycle:"Recycle", binReuse:"Donate / repair", binTrash:"Trash",
+    upcycleQ:"What can you make from this? Choose the best option!",
+    constructorQ:"Build the item from multiple parts by its name",
+    skinsQ:"15 eco-themes. New ones unlock with levels and achievements!",
+    leadersQ:"Compare yourself with other eco-heroes",
+    dailyQ:"Tasks refresh every day",
+    continue:"Continue →", timeOut:"⏱️ Time's up!", correct:"✅ Correct!", wrong:"❌ Wrong.",
+    streakBonus:"🔥 Streak ×", perfect:"Perfect!", noEnergy:"Not enough energy! ⚡",
+    claim:"Claim", claimed:"Claimed", progress:"Progress", dayDone:"All tasks completed!",
+    confirmReset:"Reset all progress? This cannot be undone.",
+    points:"points", you:"You", dragHere:"Drag parts here",
+    check:"Check", clear:"Clear", needMore:"Need more parts:",
+    success:"✅ Great! +", notEnough:"❌ Wrong parts. Try again!",
+    round:"Round", of:"of", item:"Item", question:"Question", recipe:"Recipe",
+    newSkin:"🎨 New skin:", newAch:"🏆 Achievement:",
+    needPills:"Required components:",
+    hintTitle:"💡 Hint",
+    hintText:"3 attempts used — here's a hint. Required parts are highlighted in yellow!",
+    hintText2:"3 attempts used. Look at highlighted parts.",
+  },
+  es: { title:"🧵 Segunda vida del textil", tagline:"Eco-simulador de reciclaje textil",
+    level:"Nivel", score:"Puntos", energy:"Energía", streak:"Racha", record:"Récord",
+    intro:"Cada año el mundo tira <b>92 millones de toneladas</b> de textiles.<br>¡Conviértete en eco-héroe: clasifica, recicla y aprende a dar una segunda vida!",
+    introFact:"💡 <b>Dato:</b> Una camiseta de algodón necesita <b>2700 litros de agua</b> — lo que una persona bebe en 2,5 años.",
+    start:"🌱 Comenzar aventura", load:"📂 Continuar", back:"Atrás", exit:"Salir",
+    sort:"Clasificación", sortDesc:"Objetos impredecibles",
+    quiz:"Cuestionario", quizDesc:"Pon a prueba tus conocimientos",
+    upcycle:"Upcycling", upcycleDesc:"Elige qué hacer con el objeto",
+    constructor:"Constructor", constructorDesc:"Arma una prenda nueva",
+    daily:"Tareas diarias", dailyDesc:"Metas y recompensas diarias",
+    achievements:"Logros", achDesc:"30 hazañas eco",
+    leaders:"Récords", leadersDesc:"Tabla de líderes",
+    shop:"Tienda", shopDesc:"Mejoras y bonus",
+    skins:"Temas", skinsDesc:"15 imágenes eco",
+    reset:"Reiniciar", resetDesc:"Empezar de nuevo",
+    binRecycle:"Reciclar", binReuse:"Donar / reparar", binTrash:"Basura",
+    upcycleQ:"¿Qué puedes hacer con esto? ¡Elige la mejor opción!",
+    constructorQ:"Arma la prenda con varias piezas por su nombre",
+    skinsQ:"15 temas eco. ¡Los nuevos se desbloquean con niveles y logros!",
+    leadersQ:"Compárate con otros eco-héroes",
+    dailyQ:"Las tareas se renuevan cada día",
+    continue:"Continuar →", timeOut:"⏱️ ¡Tiempo!", correct:"✅ ¡Correcto!", wrong:"❌ Incorrecto.",
+    streakBonus:"🔥 Racha ×", perfect:"¡Perfecto!", noEnergy:"¡Sin energía! ⚡",
+    claim:"Reclamar", claimed:"Reclamado", progress:"Progreso", dayDone:"¡Todas completadas!",
+    confirmReset:"¿Reiniciar todo? No se puede deshacer.",
+    points:"puntos", you:"Tú", dragHere:"Arrastra piezas aquí",
+    check:"Comprobar", clear:"Limpiar", needMore:"Faltan piezas:",
+    success:"✅ ¡Genial! +", notEnough:"❌ Piezas incorrectas. ¡Inténtalo!",
+    round:"Ronda", of:"de", item:"Objeto", question:"Pregunta", recipe:"Receta",
+    newSkin:"🎨 ¡Nuevo tema:", newAch:"🏆 ¡Logro:",
+    needPills:"Componentes necesarios:",
+    hintTitle:"💡 Pista",
+    hintText:"¡3 intentos usados! Las piezas necesarias están resaltadas en amarillo.",
+    hintText2:"3 intentos usados. Mira las piezas resaltadas.",
+  }
+};
+let LANG = 'ru';
+const t = k => (I18N[LANG] && I18N[LANG][k]) || I18N.ru[k] || k;
+
+/* ============================================================
+   БАЗА ДАННЫХ
+   ============================================================ */
+
+const SORT_DB = [
+  {icon:"👕",name:"Футболка без дырок",answer:"reuse",hint:"В хорошем состоянии",explain:"Хорошую вещь лучше отдать или обменять."},
+  {icon:"👖",name:"Рваные джинсы",answer:"recycle",hint:"Порваны колени",explain:"Джинсовая ткань отлично перерабатывается."},
+  {icon:"🧦",name:"Один носок",answer:"trash",hint:"Второй потерян",explain:"Одиночные носки не перерабатываются."},
+  {icon:"🧥",name:"Пальто в хорошем состоянии",answer:"reuse",hint:"Как новое",explain:"Найдёт нового владельца."},
+  {icon:"👗",name:"Порванное синтетическое платье",answer:"recycle",hint:"Полиэстер",explain:"Синтетические волокна перерабатываются."},
+  {icon:"🧣",name:"Грязный шарф",answer:"trash",hint:"Сильно испачкан",explain:"Загрязнённый текстиль сложно переработать."},
+  {icon:"👟",name:"Изношенные кроссовки",answer:"recycle",hint:"Стёрта подошва",explain:"Резина и текстиль разделяются."},
+  {icon:"🥼",name:"Халат с пятнами краски",answer:"trash",hint:"Химические пятна",explain:"Химически загрязнённый текстиль не перерабатывают."},
+  {icon:"🧶",name:"Клубок шерстяных ниток",answer:"recycle",hint:"Остатки пряжи",explain:"Шерсть перерабатывается."},
+  {icon:"👔",name:"Порванный шёлковый галстук",answer:"recycle",hint:"Натуральный шёлк",explain:"Шёлк биологически разлагается."},
+  {icon:"👘",name:"Кимоно ручной работы",answer:"reuse",hint:"Винтаж",explain:"Уникальную вещь лучше сохранить."},
+  {icon:"🧤",name:"Одна перчатка из кожи",answer:"recycle",hint:"Натуральная кожа",explain:"Кожа перерабатывается."},
+  {icon:"🩳",name:"Пляжные шорты с песком",answer:"trash",hint:"Песок в ткани",explain:"Песок мешает переработке."},
+  {icon:"👜",name:"Старая тканевая сумка",answer:"reuse",hint:"Ещё крепкая",explain:"Можно использовать как шоппер."},
+  {icon:"🧦",name:"Пара рваных носков",answer:"trash",hint:"Оба порваны",explain:"Смешанные волокна не перерабатываются."},
+  {icon:"👚",name:"Блузка с пятном",answer:"trash",hint:"Невыводимое пятно",explain:"Пятно может быть химическим."},
+  {icon:"🩱",name:"Купальник",answer:"recycle",hint:"Синтетика",explain:"Эластан и полиамид перерабатываются."},
+  {icon:"👔",name:"Рубашка в хорошем состоянии",answer:"reuse",hint:"Как новая",explain:"Отдать нуждающимся."},
+  {icon:"🧥",name:"Дырявый пуховик",answer:"recycle",hint:"Порван, ткань цела",explain:"Пух перерабатывается отдельно."},
+  {icon:"👖",name:"Джинсы с дыркой на колене",answer:"reuse",hint:"Можно зашить",explain:"Починить — лучший вариант."},
+  {icon:"🧣",name:"Вязаный шарф ручной работы",answer:"reuse",hint:"Хорошее состояние",explain:"Отдать или использовать как декор."},
+  {icon:"🥿",name:"Изношенные балетки",answer:"recycle",hint:"Резиновая подошва",explain:"Подошва и текстиль разделяются."},
+  {icon:"🧢",name:"Кепка с логотипом",answer:"reuse",hint:"Хорошее состояние",explain:"Отдать или продать."},
+  {icon:"🩲",name:"Старые плавки",answer:"trash",hint:"Изношены",explain:"Нижнее бельё не перерабатывается."},
+  {icon:"👗",name:"Вечернее платье",answer:"reuse",hint:"Хорошее состояние",explain:"Продать или отдать."},
+  {icon:"🧥",name:"Пальто с оторванной пуговицей",answer:"reuse",hint:"Лёгкий ремонт",explain:"Пришить — и вещь как новая."},
+  {icon:"👖",name:"Джинсы с масляным пятном",answer:"trash",hint:"Пятно не выводится",explain:"Масло может быть химическим."},
+  {icon:"👕",name:"Майка с трещинами на принте",answer:"recycle",hint:"Принт потрескался",explain:"Ткань перерабатывается."},
+  {icon:"🧶",name:"Распущенный свитер",answer:"recycle",hint:"Пряжа цела",explain:"Пряжу можно перемотать."},
+  {icon:"🧥",name:"Кожаная куртка",answer:"reuse",hint:"Хорошее состояние",explain:"Кожаные вещи ценятся."},
+  {icon:"👗",name:"Платье с разошедшимся швом",answer:"reuse",hint:"Можно зашить",explain:"Небольшой ремонт — и вещь спасена."},
+  {icon:"🧤",name:"Пара варежек с дыркой",answer:"trash",hint:"Одна порвана",explain:"Пару перерабатывать сложно."},
+  {icon:"👟",name:"Кроссовки с порванной подошвой",answer:"recycle",hint:"Подошва отходит",explain:"Разделяются на резину и текстиль."},
+  {icon:"🧦",name:"Носки с заштопанной пяткой",answer:"reuse",hint:"Уже починены",explain:"Использовать дальше."},
+  {icon:"👔",name:"Галстук с затяжкой",answer:"trash",hint:"Затяжка на виду",explain:"Затяжку на шёлке не убрать."},
+  {icon:"👚",name:"Детская футболка",answer:"reuse",hint:"Ребёнок вырос",explain:"Отдать другим детям."},
+  {icon:"🧥",name:"Плащ с оторванным рукавом",answer:"recycle",hint:"Сильно повреждён",explain:"Ткань перерабатывается."},
+  {icon:"🩱",name:"Купальник с выцветшим цветом",answer:"recycle",hint:"Цвет потерян",explain:"Синтетика перерабатывается."},
+  {icon:"🧢",name:"Бейсболка с потёртостями",answer:"reuse",hint:"Ещё носится",explain:"Можно носить дома."},
+  {icon:"👗",name:"Свадебное платье",answer:"reuse",hint:"Хорошее состояние",explain:"Продать или перешить."},
+  {icon:"🧣",name:"Пуховый платок",answer:"reuse",hint:"Тёплый, целый",explain:"Отдать или использовать как декор."},
+  {icon:"👖",name:"Джинсовая куртка с потёртостями",answer:"reuse",hint:"Стиль гранж",explain:"Потёртости — это стиль."},
+  {icon:"🧥",name:"Шуба из искусственного меха",answer:"recycle",hint:"Синтетика",explain:"Мех перерабатывается."},
+  {icon:"👔",name:"Рубашка с коротким рукавом",answer:"reuse",hint:"Хорошее состояние",explain:"Отдать или перешить."},
+  {icon:"🧦",name:"Спортивные носки",answer:"recycle",hint:"Синтетика",explain:"Синтетические волокна перерабатываются."},
+  {icon:"👟",name:"Ботинки с отклеенной подошвой",answer:"recycle",hint:"Подошва отходит",explain:"Резина перерабатывается."},
+  {icon:"👘",name:"Кимоно с вышивкой",answer:"reuse",hint:"Винтаж",explain:"Уникальная вещь — в коллекцию."},
+  {icon:"🧥",name:"Дублёнка с потёртостями",answer:"recycle",hint:"Натуральная кожа",explain:"Кожа перерабатывается."},
+  {icon:"👔",name:"Фрак с золотыми пуговицами",answer:"reuse",hint:"Винтаж",explain:"Сдать в театр или коллекционеру."},
+  {icon:"🧶",name:"Пряжа из ангоры",answer:"reuse",hint:"Дорогая пряжа",explain:"Использовать для вязания."},
+  {icon:"👗",name:"Платье с бисером",answer:"reuse",hint:"Ручная работа",explain:"Бисер снимается, платье перешивается."},
+];
+
+const QUIZ_DB = [
+  {q:"Сколько воды нужно для одной хлопковой футболки?",answers:["Около 2700 литров","Меньше литра","Столько же, сколько для бумажного пакета","Зависит от цвета"],correct:0,fact:"2700 л — это 2,5 года питья!"},
+  {q:"Сколько воды уходит на пару джинсов?",answers:["Как на 1 чашку кофе","~7500 литров","Ровно 100 л","Не требуется"],correct:1,fact:"До 7500 литров!"},
+  {q:"Сколько воды экономит переработка 1 кг текстиля?",answers:["~6000 литров","~10 литров","Воду не экономят","Столько же"],correct:0,fact:"~6000 литров!"},
+  {q:"Какой % пресной воды тратит текстильная промышленность?",answers:["Около 2%","Больше половины","Нисколько","~90%"],correct:0,fact:"Около 2% всей пресной воды."},
+  {q:"Сколько разлагается полиэстер?",answers:["Быстрее бумаги","200+ лет","10 лет","1 месяц"],correct:1,fact:"Более 200 лет!"},
+  {q:"Что выделяет текстиль на свалках?",answers:["Кислород","Метан","Аргон","Гелий"],correct:1,fact:"Парниковый газ метан."},
+  {q:"Сколько текстиля в мире выбрасывается ежегодно?",answers:["Как 1 чемодан","~92 млн тонн","~100 кг","1 тонна"],correct:1,fact:"~92 млн тонн!"},
+  {q:"Сколько кг одежды выбрасывает человек в год?",answers:["~30 кг","0 кг","500 кг","1 кг"],correct:0,fact:"~30 кг на человека."},
+  {q:"Какой % одежды перерабатывается в новую?",answers:["Больше половины","Почти всю","Менее 1%","Ровно 10%"],correct:2,fact:"Менее 1%!"},
+  {q:"Из скольких бутылок делают эко-футболку?",answers:["Из 12","Из 100","Из 1","Из 50"],correct:0,fact:"12 бутылок = 1 футболка."},
+  {q:"Что такое «круговая мода»?",answers:["Модель многократного использования вещей","Круглые принты","Мода для полных","Летняя коллекция"],correct:0,fact:"Дизайн → носка → починка → переработка."},
+  {q:"Что такое апсайклинг?",answers:["Создание новой вещи из старой","Утилизация на заводе","Сжигание","Покупка нового"],correct:0,fact:"Старая футболка → сумка."},
+  {q:"Сколько CO₂ даёт текстильная промышленность?",answers:["~10% мировых выбросов","Меньше 0,1%","50%","0%"],correct:0,fact:"~10% — больше авиации!"},
+  {q:"На сколько снижается CO₂ при продлении жизни вещи на 9 месяцев?",answers:["На 1%","На 20–30%","На 90%","Ни на сколько"],correct:1,fact:"−20–30% углеродного следа."},
+  {q:"Какой сектор производит больше CO₂, чем авиация?",answers:["Текстильная промышленность","Космонавтика","Вязание","Рыболовство"],correct:0,fact:"Текстиль — ~10% выбросов."},
+  {q:"Какой материал разлагается быстрее?",answers:["Хлопок","Полиэстер","Нейлон","Акрил"],correct:0,fact:"Хлопок — месяцы, полиэстер — сотни лет."},
+  {q:"Что такое микрофибра в контексте стирки?",answers:["Тип ткани","Микрочастицы пластика","Порошок","Бренд"],correct:1,fact:"До 700 000 микрочастиц за стирку."},
+  {q:"Какой материал производят из нефти?",answers:["Полиэстер","Хлопок","Лён","Шёлк"],correct:0,fact:"Полиэстер — из нефти."},
+  {q:"Что такое вискоза?",answers:["Искусственное волокно из целлюлозы","Синтетика из нефти","Натуральный шёлк","Кожа"],correct:0,fact:"Вискоза — из древесной целлюлозы."},
+  {q:"Что такое fast fashion?",answers:["Дешёвая одежда с коротким сроком","Быстрая доставка","Спортивная мода","Винтаж"],correct:0,fact:"Миллиарды вещей на несколько носок."},
+  {q:"Сколько раз надевают вещь fast fashion?",answers:["~7 раз","100 раз","Никогда","1 раз"],correct:0,fact:"Всего ~7 раз!"},
+  {q:"Сколько коллекций в год выпускает fast fashion?",answers:["2","4","52+","10"],correct:2,fact:"До 52 микро-коллекций в год."},
+  {q:"Как fast fashion влияет на природу?",answers:["Увеличивает отходы и выбросы","Никак","Улучшает экологию","Снижает потребление"],correct:0,fact:"Один из главных источников отходов."},
+  {q:"Лучший способ снизить эко-след от одежды?",answers:["Носить дольше и чинить","Покупать больше","Сжигать","Выбрасывать"],correct:0,fact:"Продление жизни — главный способ."},
+  {q:"Что делать со старой одеждой в хорошем состоянии?",answers:["Отдать или продать","Выбросить","Сжечь","Спрятать"],correct:0,fact:"Отдать — продлить жизнь."},
+  {q:"Что делать с рваной футболкой?",answers:["Сдать на переработку","Выбросить","Сжечь","Забыть"],correct:0,fact:"Ткань перерабатывается."},
+  {q:"Сколько воды тратит стирка одной загрузки?",answers:["50–100 л","5 л","500 л","1000 л"],correct:0,fact:"Стирка при 30°C экономит воду."},
+  {q:"Как стирать синтетику, чтобы снизить микропластик?",answers:["При 30°C с мешком","При 90°C","Без порошка","Руками"],correct:0,fact:"Мешок улавливает микрочастицы."},
+  {q:"Что такое секонд-хенд?",answers:["Одежда, бывшая в употреблении","Новая одежда","Бренд","Магазин тканей"],correct:0,fact:"Продлевает жизнь вещам."},
+  {q:"Что можно сделать из старых джинсов?",answers:["Сумку или шорты","Бумагу","Стекло","Пластик"],correct:0,fact:"Джинса — идеальна для апсайклинга."},
+  {q:"Что такое «эко-мода»?",answers:["Одежда с минимальным влиянием на природу","Дорогая одежда","Спорт","Из кожи"],correct:0,fact:"Устойчивое производство."},
+  {q:"Что такое «зелёный» офис?",answers:["Офис с низким эко-следом","Офис с растениями","Офис в парке","С зелёной крышей"],correct:0,fact:"Экономия энергии, воды и отходов."},
+  {q:"Сколько энергии экономит переработка текстиля?",answers:["30–50%","10%","80%","100%"],correct:0,fact:"До 50% энергии."},
+  {q:"Что такое «эко-сумка»?",answers:["Многоразовая тканевая сумка","Сумка из пластика","Бумажный пакет","Полиэтиленовый пакет"],correct:0,fact:"Заменяет сотни пакетов."},
+  {q:"Что делать с обувью в хорошем состоянии?",answers:["Отдать или починить","Выбросить","Сжечь","Спрятать"],correct:0,fact:"Можно отдать или починить."},
+  {q:"Что такое «циклическая экономика»?",answers:["Модель, где отходы = ресурсы","Экономика циклов","Экономика роста","Экономика падения"],correct:0,fact:"Переработка и повторное использование."},
+  {q:"Сколько текстиля покупает человек в год?",answers:["10–15 кг","5 кг","50 кг","100 кг"],correct:0,fact:"В среднем 10–15 кг."},
+  {q:"Что такое «зелёный» мусор?",answers:["Органические отходы","Мусор с травой","Стеклянные бутылки","Металл"],correct:0,fact:"Органические отходы компостируются."},
+  {q:"Что такое «апсайклинг-бренд»?",answers:["Бренд, создающий вещи из старых","Бренд новой одежды","Бренд тканей","Бренд обуви"],correct:0,fact:"Делают новое из старого."},
+  {q:"Какой материал называют «искусственным шёлком»?",answers:["Вискоза","Нейлон","Акрил","Полиэстер"],correct:0,fact:"Вискоза — из целлюлозы."},
+  {q:"Сколько лет нужно для разложения хлопка?",answers:["1 месяц","5 лет","100 лет","1000 лет"],correct:0,fact:"Хлопок — несколько месяцев."},
+  {q:"Что такое «памятка по стирке»?",answers:["Инструкция по уходу за тканью","Стихи","Песня","Бренд порошка"],correct:0,fact:"Правильный уход продлевает жизнь."},
+  {q:"Как называется ткань из переработанного пластика?",answers:["Полиэстер","Хлопок","Шёлк","Лён"],correct:0,fact:"Переработанный полиэстер."},
+  {q:"Сколько воды нужно для одной пары обуви?",answers:["~15000 л","10 л","100 л","1000 л"],correct:0,fact:"До 15000 литров!"},
+  {q:"Что такое «эко-френдли»?",answers:["Экологически безопасный","Друг природы","Спортивный","Яркий"],correct:0,fact:"Минимальное влияние на природу."},
+  {q:"Что можно сделать из старой пряжи?",answers:["Игрушку","Бумагу","Стекло","Металл"],correct:0,fact:"Вяжут игрушки и украшения."},
+  {q:"Что такое «апсайклинг-вещь»?",answers:["Вещь, созданная из старой","Новая вещь","Из кожи","Из шёлка"],correct:0,fact:"Создание нового из старого."},
+  {q:"Сколько одежды в среднем в шкафу человека?",answers:["~150 вещей","10 вещей","1000 вещей","1 вещь"],correct:0,fact:"~150 вещей, носим ~20%."},
+  {q:"Что такое «капсульный гардероб»?",answers:["Минимальный гарнитур из взаимозаменяемых вещей","Гардероб для капсулы","Для космоса","Для детей"],correct:0,fact:"20–30 вещей, которые сочетаются."},
+  {q:"Сколько CO₂ экономит переработка 1 кг одежды?",answers:["~3,6 кг","1 кг","10 кг","100 кг"],correct:0,fact:"~3,6 кг CO₂ на 1 кг."},
+];
+
+const UPCYCLE_DB = [
+  {icon:"👕",name:"Старая футболка",options:[{text:"Сумка-шоппер",correct:true,explain:"Отличная сумка без шитья!"},{text:"Новая футболка",correct:false,explain:"Это переработка."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"👖",name:"Старые джинсы",options:[{text:"Шорты или рюкзак",correct:true,explain:"Джинса — идеальна!"},{text:"Топливо",correct:false,explain:"Сжигание — потеря."},{text:"Новые джинсы",correct:false,explain:"Это переработка."}]},
+  {icon:"🧦",name:"Рваные носки",options:[{text:"Игрушка или тряпка",correct:true,explain:"Отличный вариант!"},{text:"Новые носки",correct:false,explain:"Не сделать из одного."},{text:"Удобрение",correct:false,explain:"Синтетика не удобрение."}]},
+  {icon:"🧶",name:"Остатки пряжи",options:[{text:"Аппликация или кукла",correct:true,explain:"Игрушки и украшения."},{text:"Выбросить",correct:false,explain:"Ценный ресурс!"},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+  {icon:"👚",name:"Старая блузка",options:[{text:"Наволочка или фартук",correct:true,explain:"Красивая наволочка!"},{text:"Бумага",correct:false,explain:"Ткань не бумага."},{text:"Пластик",correct:false,explain:"Только синтетика."}]},
+  {icon:"🧥",name:"Старое пальто",options:[{text:"Жилет или чехол",correct:true,explain:"Жилеты, чехлы, сумки."},{text:"Обувь",correct:false,explain:"Требует оборудования."},{text:"Стекло",correct:false,explain:"Ткань ≠ стекло!"}]},
+  {icon:"👔",name:"Старый галстук",options:[{text:"Закладка или браслет",correct:true,explain:"Узкая ткань — для аксессуаров."},{text:"Скатерть",correct:false,explain:"Слишком мало ткани."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧣",name:"Вязаный шарф",options:[{text:"Шапка или пинетки",correct:true,explain:"Распустить и связать!"},{text:"Сумка",correct:false,explain:"Вязаное растянется."},{text:"Полотенце",correct:false,explain:"Не тот материал."}]},
+  {icon:"👗",name:"Старое платье",options:[{text:"Юбка или топ",correct:true,explain:"Два новых предмета!"},{text:"Одеяло",correct:false,explain:"Мало ткани."},{text:"Шторы",correct:false,explain:"Не тот размер."}]},
+  {icon:"👟",name:"Старые кроссовки",options:[{text:"Кашпо для цветов",correct:true,explain:"Популярное кашпо!"},{text:"Новая обувь",correct:false,explain:"Это переработка."},{text:"Сжечь",correct:false,explain:"Токсичные выбросы."}]},
+  {icon:"👜",name:"Старая сумка",options:[{text:"Косметичка или органайзер",correct:true,explain:"Органайзер для мелочей."},{text:"Шапка",correct:false,explain:"Не тот материал."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧤",name:"Порванные перчатки",options:[{text:"Мягкая игрушка",correct:true,explain:"Забавные игрушки!"},{text:"Варежки",correct:false,explain:"Из перчаток не сделать."},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+  {icon:"🥼",name:"Старый халат",options:[{text:"Халат для куклы или тряпка",correct:true,explain:"Маленький халат!"},{text:"Сумка",correct:false,explain:"Не держит форму."},{text:"Бумага",correct:false,explain:"Ткань не бумага."}]},
+  {icon:"🧦",name:"Старые колготки",options:[{text:"Мягкая игрушка или губка",correct:true,explain:"Отличный наполнитель!"},{text:"Новые колготки",correct:false,explain:"Это переработка."},{text:"Удобрение",correct:false,explain:"Синтетика."}]},
+  {icon:"👘",name:"Старое кимоно",options:[{text:"Халат или плед",correct:true,explain:"Стильный халат!"},{text:"Скатерть",correct:false,explain:"Не тот размер."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🩳",name:"Старые шорты",options:[{text:"Косметичка или чехол",correct:true,explain:"Чехол для телефона."},{text:"Новые шорты",correct:false,explain:"Это переработка."},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+  {icon:"👔",name:"Рубашка с длинным рукавом",options:[{text:"Фартук или наволочка",correct:true,explain:"Фартук!"},{text:"Сумка",correct:false,explain:"Тонкая ткань."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧥",name:"Пуховик",options:[{text:"Подушка или одеяло",correct:true,explain:"Пух — наполнитель!"},{text:"Новый пуховик",correct:false,explain:"Это переработка."},{text:"Сжечь",correct:false,explain:"Токсичные выбросы."}]},
+  {icon:"👗",name:"Свадебное платье",options:[{text:"Платье для куклы или фотосессии",correct:true,explain:"Наряд для куклы!"},{text:"Скатерть",correct:false,explain:"Жалко!"},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧦",name:"Один носок",options:[{text:"Игрушка-осьминог",correct:true,explain:"Забавный осьминог!"},{text:"Второй носок",correct:false,explain:"Не сделать пару."},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+  {icon:"👖",name:"Джинсовая куртка",options:[{text:"Сумка или жилет",correct:true,explain:"Сумка!"},{text:"Брюки",correct:false,explain:"Не тот крой."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧣",name:"Шёлковый платок",options:[{text:"Топ или сумка",correct:true,explain:"Топ или сумка!"},{text:"Полотенце",correct:false,explain:"Шёлк не впитывает."},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+  {icon:"👟",name:"Кеды",options:[{text:"Кашпо или пенал",correct:true,explain:"Пенал!"},{text:"Новая обувь",correct:false,explain:"Это переработка."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧥",name:"Кожаная куртка",options:[{text:"Сумка или жилет",correct:true,explain:"Стильная сумка!"},{text:"Бумага",correct:false,explain:"Кожа не бумага."},{text:"Сжечь",correct:false,explain:"Токсичные выбросы."}]},
+  {icon:"👗",name:"Платье с бисером",options:[{text:"Украшение или брошь",correct:true,explain:"Бисер — заново!"},{text:"Скатерть",correct:false,explain:"Бисер будет мешать."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧤",name:"Варежки",options:[{text:"Игрушка или прихватка",correct:true,explain:"Прихватки!"},{text:"Шарф",correct:false,explain:"Мало ткани."},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+  {icon:"👚",name:"Майка",options:[{text:"Сумка или тряпка",correct:true,explain:"Сумка!"},{text:"Платье",correct:false,explain:"Не тот размер."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧥",name:"Плащ",options:[{text:"Дождевик для собаки или чехол",correct:true,explain:"Дождевик!"},{text:"Куртка",correct:false,explain:"Не тот крой."},{text:"Сжечь",correct:false,explain:"Токсичные выбросы."}]},
+  {icon:"👔",name:"Рубашка в клетку",options:[{text:"Наволочка или фартук",correct:true,explain:"Наволочка!"},{text:"Брюки",correct:false,explain:"Не тот крой."},{text:"Выбросить",correct:false,explain:"Теряем ресурс."}]},
+  {icon:"🧥",name:"Джинсовая рубашка",options:[{text:"Сумка или органайзер",correct:true,explain:"Органайзер!"},{text:"Пальто",correct:false,explain:"Мало ткани."},{text:"Сжечь",correct:false,explain:"Загрязняет воздух."}]},
+];
+
+const CONSTRUCTOR_RECIPES = [
+  {target:"👜",targetName:"Сумка-шоппер",need:["👕","🧵"],parts:["👕","👖","🧦","🧣","👗","🧥","🧵","🧢"],hint:""},
+  {target:"🩳",targetName:"Шорты",need:["👖","🧵"],parts:["👖","👕","🧶","🧦","🧥","👗","🧵","🧢"],hint:""},
+  {target:"🧸",targetName:"Мягкая игрушка",need:["🧦","🧶","🧵"],parts:["🧦","🧶","👕","🧣","🧤","👗","🧵","🧥"],hint:""},
+  {target:"🛏️",targetName:"Наволочка",need:["👚","🧵"],parts:["👚","👕","🧣","🧥","👗","🧶","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Жилет",need:["🧥","🧵"],parts:["🧥","👖","👕","🧶","👔","👜","🧵","🧣"],hint:""},
+  {target:"🎒",targetName:"Рюкзак",need:["👖","🧵","🧶"],parts:["👖","🧵","👕","🧦","🧣","🧶","🧢","🧥"],hint:""},
+  {target:"🧣",targetName:"Шарф",need:["🧶","🧵"],parts:["🧶","👕","🧦","🧥","👗","🧤","🧵","🧢"],hint:""},
+  {target:"🧤",targetName:"Варежки",need:["🧶","🧦","🧵"],parts:["🧶","🧦","👕","🧣","🧥","👖","🧵","🧢"],hint:""},
+  {target:"🩱",targetName:"Купальник",need:["👗","🧵"],parts:["👗","👚","👕","🧥","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"👛",targetName:"Косметичка",need:["👚","🧵"],parts:["👚","🧵","👕","🧦","🧣","👖","🧶","🧢"],hint:""},
+  {target:"👒",targetName:"Шляпа",need:["🧢","🧵","🧶"],parts:["🧢","👕","🧥","🧶","👗","🧣","🧵","👖"],hint:""},
+  {target:"🧥",targetName:"Дождевик",need:["🧥","🧵","🧶"],parts:["🧥","🧵","👖","👕","🧶","🧦","🧢","🧣"],hint:""},
+  {target:"🩳",targetName:"Бермуды",need:["👖","🧵","🧶"],parts:["👖","🧵","👕","🧦","🧣","🧶","🧢","🧥"],hint:""},
+  {target:"👗",targetName:"Сарафан",need:["👚","👗","🧵"],parts:["👚","👗","👕","🧥","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧦",targetName:"Гольфы",need:["🧶","🧵"],parts:["🧶","👕","🧥","👗","🧣","🧤","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Пальто-трансформер",need:["🧥","🧶","🧵"],parts:["🧥","🧶","👖","👕","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"👝",targetName:"Клатч",need:["👔","🧵","🧶"],parts:["👔","🧵","👕","🧦","🧣","🧶","🧢","🧥"],hint:""},
+  {target:"🧣",targetName:"Снуд",need:["🧶","🧥","🧵"],parts:["🧶","🧥","👕","🧦","👗","🧤","🧵","🧢"],hint:""},
+  {target:"👖",targetName:"Юбка-брюки",need:["👖","👗","🧵"],parts:["👖","👗","👕","🧥","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧦",targetName:"Гетры",need:["🧶","🧥","🧵"],parts:["🧶","🧥","👕","👖","🧣","🧤","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Кейп",need:["🧥","👗","🧵"],parts:["🧥","👗","👕","🧶","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-рубашка",need:["👔","👚","🧵"],parts:["👔","👚","👕","👖","🧥","🧶","🧵","🧢"],hint:""},
+  {target:"🧢",targetName:"Кепка-бини",need:["🧶","🧦","🧵"],parts:["🧶","🧦","👕","🧥","👗","🧣","🧵","🧢"],hint:""},
+  {target:"👘",targetName:"Халат",need:["🧥","👚","🧵"],parts:["🧥","👚","👕","👖","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🩳",targetName:"Бриджи",need:["👖","🧶","🧵"],parts:["👖","🧶","👕","🧥","🧣","🧦","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Жакет",need:["🧥","👔","🧵"],parts:["🧥","👔","👕","👖","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-трапеция",need:["👗","👚","🧵"],parts:["👗","👚","👕","🧥","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧦",targetName:"Чулки",need:["🧶","🧦","🧵"],parts:["🧶","🧦","👕","🧥","👗","🧣","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Кардиган",need:["🧥","🧶","🧵"],parts:["🧥","🧶","👕","👖","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"👔",targetName:"Галстук-бабочка",need:["👔","🧵","🧶"],parts:["👔","🧵","👕","👖","🧥","🧶","🧢","🧣"],hint:""},
+  {target:"🧥",targetName:"Пончо",need:["🧥","🧣","🧵"],parts:["🧥","🧣","👕","👖","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-футляр",need:["👗","👔","🧵"],parts:["👗","👔","👕","👖","🧥","🧶","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Куртка-бомбер",need:["🧥","👖","🧵"],parts:["🧥","👖","👕","🧶","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"👔",targetName:"Шейный платок",need:["👔","🧣","🧵"],parts:["👔","🧣","👕","👖","🧥","🧶","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Ветровка",need:["🧥","🧶","🧵"],parts:["🧥","🧶","👕","👖","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"🩳",targetName:"Спортивные шорты",need:["👖","👕","🧵"],parts:["👖","👕","🧥","🧶","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-бандо",need:["👗","🧵","🧶"],parts:["👗","🧵","👕","👖","🧥","🧶","🧢","🧣"],hint:""},
+  {target:"🧥",targetName:"Пальто-оверсайз",need:["🧥","👖","🧶","🧵"],parts:["🧥","👖","🧶","👕","🧦","🧣","🧵","🧢"],hint:""},
+  {target:"👕",targetName:"Топ",need:["👕","👚","🧵"],parts:["👕","👚","👖","🧥","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Пальто-кокон",need:["🧥","🧶","🧣","🧵"],parts:["🧥","🧶","🧣","👕","👖","🧦","🧵","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-годе",need:["👗","👖","🧵"],parts:["👗","👖","👕","🧥","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Пальто-халат",need:["🧥","👔","🧵"],parts:["🧥","👔","👕","👖","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧦",targetName:"Тёплые гольфы",need:["🧶","🧥","🧦","🧵"],parts:["🧶","🧥","🧦","👕","👖","🧣","🧵","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-сафари",need:["👗","👖","🧥","🧵"],parts:["👗","👖","🧥","👕","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"🧥",targetName:"Тренч",need:["🧥","👖","🧣","🧵"],parts:["🧥","👖","🧣","👕","🧶","🧦","🧵","🧢"],hint:""},
+  {target:"👔",targetName:"Пластрон",need:["👔","👚","🧵","🧶"],parts:["👔","👚","🧵","👕","👖","🧥","🧶","🧢"],hint:""},
+  {target:"👗",targetName:"Платье-поло",need:["👗","👕","🧵"],parts:["👗","👕","🧵","👖","🧥","🧶","🧢","🧣"],hint:""},
+  {target:"🎩",targetName:"Цилиндр",need:["🧢","🧵","🧶"],parts:["🧢","🧵","👕","🧥","🧶","🧣","👖","🧦"],hint:""},
+  {target:"🧣",targetName:"Бактус",need:["🧶","🧵","🧥"],parts:["🧶","🧵","👕","👖","🧥","🧦","🧢","🧣"],hint:""},
+  {target:"👜",targetName:"Сумка-мешок",need:["👕","🧶","🧵"],parts:["👕","🧶","🧵","👖","🧦","🧣","🧥","🧢"],hint:""},
+];
+
+const SHOP_ITEMS = [
+  {id:"energy1",emoji:"⚡",name:"Энергетик",cost:50,desc:"+3 энергии",repeatable:true},
+  {id:"streak",emoji:"🔥",name:"Бонус серии",cost:80,desc:"+50% очков за серию",repeatable:false},
+  {id:"timer",emoji:"⏱️",name:"Секундомер",cost:120,desc:"Таймер в заданиях",repeatable:false},
+  {id:"xpDouble",emoji:"🌟",name:"Опыт ×2",cost:150,desc:"Удваивает XP за уровень",repeatable:true},
+  {id:"energyMax",emoji:"🔋",name:"Расширение",cost:200,desc:"+5 к максимуму энергии",repeatable:true},
+  {id:"skinBoost",emoji:"🎨",name:"Ускорение скинов",cost:300,desc:"Открывает скин «Аврора»",repeatable:false},
+];
+
+const SKINS = [
+  {id:"forest",  name:"Лес",        emoji:"🌲", color:"#43a047", desc:"Зелёный лес",         unlockLevel:1, unlockAch:null},
+  {id:"ocean",   name:"Океан",      emoji:"🌊", color:"#0288d1", desc:"Синие волны",         unlockLevel:3, unlockAch:null},
+  {id:"sunset",  name:"Закат",      emoji:"🌅", color:"#f4511e", desc:"Тёплый закат",        unlockLevel:5, unlockAch:null},
+  {id:"night",   name:"Ночь",       emoji:"🌙", color:"#7e57c2", desc:"Звёздная ночь",       unlockLevel:8, unlockAch:null},
+  {id:"spring",  name:"Весна",      emoji:"🌱", color:"#8bc34a", desc:"Первая зелень",       unlockLevel:10, unlockAch:null},
+  {id:"mint",    name:"Мята",       emoji:"🍃", color:"#26a69a", desc:"Свежая мята",         unlockLevel:12, unlockAch:null},
+  {id:"autumn",  name:"Осень",      emoji:"🍂", color:"#ff7043", desc:"Золотая осень",       unlockLevel:15, unlockAch:null},
+  {id:"lavender",name:"Лаванда",    emoji:"💜", color:"#9575cd", desc:"Лавандовое поле",     unlockLevel:18, unlockAch:null},
+  {id:"coral",   name:"Коралл",     emoji:"🐚", color:"#ec407a", desc:"Коралловый риф",      unlockLevel:20, unlockAch:null},
+  {id:"ice",     name:"Лёд",        emoji:"❄️", color:"#4dd0e1", desc:"Ледяная свежесть",    unlockLevel:null, unlockAch:"streak20"},
+  {id:"sand",    name:"Песок",      emoji:"🏖️", color:"#c0a062", desc:"Тёплый пляж",         unlockLevel:null, unlockAch:"score500"},
+  {id:"cherry",  name:"Сакура",     emoji:"🌸", color:"#e53935", desc:"Цветущая сакура",     unlockLevel:null, unlockAch:"perfect10"},
+  {id:"lime",    name:"Лайм",       emoji:"🍋", color:"#aeea00", desc:"Сочный лайм",         unlockLevel:null, unlockAch:"level10"},
+  {id:"earth",   name:"Земля",      emoji:"🌍", color:"#8d6e63", desc:"Родная планета",      unlockLevel:null, unlockAch:"all_modes"},
+  {id:"aurora",  name:"Аврора",     emoji:"🌌", color:"#00bfa5", desc:"Северное сияние",     unlockLevel:null, unlockAch:"constructor3"},
+];
+
+const ACHIEVEMENTS = [
+  {id:"first_game",     icon:"🌱", name:"Первый шаг",         desc:"Сыграй первую игру"},
+  {id:"first_sort",     icon:"👕", name:"Первая сортировка",  desc:"Пройди первую сортировку"},
+  {id:"first_quiz",     icon:"🧠", name:"Первый вопрос",      desc:"Ответь на первый вопрос"},
+  {id:"first_upcycle",  icon:"✂️", name:"Первый апсайкл",     desc:"Первый апсайклинг"},
+  {id:"first_const",    icon:"🧩", name:"Первый конструктор", desc:"Собери первый предмет"},
+  {id:"streak5",        icon:"🔥", name:"В ударе",            desc:"Серия из 5 ответов"},
+  {id:"streak10",       icon:"⚡", name:"На волне",           desc:"Серия из 10 ответов"},
+  {id:"streak20",       icon:"💥", name:"Неудержимый",        desc:"Серия из 20 ответов"},
+  {id:"streak50",       icon:"🌟", name:"Молния",             desc:"Серия из 50 ответов"},
+  {id:"sort10",         icon:"👚", name:"Сортировщик",        desc:"10 сортировок"},
+  {id:"sort30",         icon:"🎯", name:"Профи",              desc:"30 сортировок"},
+  {id:"perfect1",       icon:"💎", name:"Идеальный раунд",    desc:"Раунд без ошибок"},
+  {id:"perfect10",      icon:"🏆", name:"Безупречно!",        desc:"10 идеальных раундов"},
+  {id:"quiz10",         icon:"📚", name:"Ученик",             desc:"10 верных ответов"},
+  {id:"quiz20",         icon:"🎓", name:"Эрудит",             desc:"20 верных ответов"},
+  {id:"quiz50",         icon:"🧑‍🎓", name:"Профессор",       desc:"50 верных ответов"},
+  {id:"upcycle5",       icon:"🪡", name:"Мастер апсайклинга", desc:"5 апсайклингов"},
+  {id:"upcycle15",      icon:"🎨", name:"Художник",           desc:"15 апсайклингов"},
+  {id:"constructor3",   icon:"🔧", name:"Инженер",            desc:"3 сборки в конструкторе"},
+  {id:"constructor10",  icon:"🏗️", name:"Архитектор",        desc:"10 сборок"},
+  {id:"score100",       icon:"💫", name:"Первый капитал",     desc:"100 очков"},
+  {id:"score500",       icon:"⭐", name:"Эко-звезда",         desc:"500 очков"},
+  {id:"score2000",      icon:"🌠", name:"Легенда",            desc:"2000 очков"},
+  {id:"level5",         icon:"🥉", name:"Пятый уровень",      desc:"Достигни 5 уровня"},
+  {id:"level10",        icon:"🥈", name:"Десятый уровень",    desc:"Достигни 10 уровня"},
+  {id:"level20",        icon:"🥇", name:"Двадцатый уровень",  desc:"Достигни 20 уровня"},
+  {id:"daily1",         icon:"📅", name:"День первый",        desc:"Выполни 1 задание дня"},
+  {id:"daily3",         icon:"🗓️", name:"Пунктуальный",      desc:"3 задания дня"},
+  {id:"all_modes",      icon:"🌈", name:"Всё умею",           desc:"Сыграй во все 4 режима"},
+  {id:"skin5",          icon:"🎨", name:"Коллекционер",       desc:"Открой 5 скинов"},
+];
+
+const FACTS = [
+  "На пару джинсов уходит до <b>7500 литров воды</b>.",
+  "Текстильная промышленность — <b>~10% выбросов CO₂</b>.",
+  "Средний человек выбрасывает <b>~30 кг одежды в год</b>.",
+  "Переработка 1 кг текстиля экономит <b>~6000 л воды</b>.",
+  "Переработанный полиэстер снижает CO₂ на <b>30–50%</b>.",
+  "<b>Менее 1%</b> одежды перерабатывается в новую.",
+  "Стирка синтетики выделяет <b>микропластик</b>.",
+  "Вещь fast fashion носят <b>~7 раз</b>.",
+  "Из <b>12 бутылок</b> — одна эко-футболка.",
+  "Вторая жизнь одежды = <b>−20–30% CO₂</b>.",
+];
+
+let state = {
+  level:1, xp:0, score:0, energy:10, maxEnergy:10,
+  streak:0, bestStreak:0, record:0,
+  totalCorrect:0, totalWrong:0,
+  levelsPlayed:0, sortLevelsDone:0, quizLevelsDone:0, upcycleLevelsDone:0, constructorDone:0,
+  perfectSorts:0, quizCorrect:0, upcycleCorrect:0,
+  ownedShop:{}, activeBoosts:{streakBonus:false,timer:false,xpDouble:false},
+  unlockedAch:[], currentSkin:"forest", unlockedSkins:["forest"],
+  modesPlayed:{sort:0,quiz:0,upcycle:0,constructor:0},
+  daily:{ date:null, tasks:[], claimed:[] },
+  todayStats:{ correctSort:0, correctQuiz:0, bestStreakToday:0, scoreToday:0 },
+  usedSortItems:[], usedQuizQuestions:[],
+};
+
+let currentSession = null;
+let sortTimer = null, quizTimer = null;
+
+const $ = id => document.getElementById(id);
+const show = id => {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+};
+const rnd = arr => arr[Math.floor(Math.random()*arr.length)];
+const shuffle = arr => arr.map(a=>({a,r:Math.random()})).sort((x,y)=>x.r-y.r).map(x=>x.a);
+
+function toast(msg, color='') {
+  const el = document.createElement('div');
+  el.className = 'toast ' + color;
+  el.innerHTML = msg;
+  $('toastBox').appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; }, 2500);
+  setTimeout(() => el.remove(), 2900);
+}
+
+function saveGame() {
+  try { localStorage.setItem('textileGameMega', JSON.stringify(state)); $('loadBtn').style.display = 'block'; } catch(e) {}
+}
+function loadGame() {
+  try {
+    const raw = localStorage.getItem('textileGameMega');
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    Object.assign(state, saved);
+    applySkin(state.currentSkin);
+    updateHUD();
+    show('screenMenu');
+    updateMenuAvailability();
+    refreshMenuBadges();
+    showDailyFact();
+  } catch(e) { alert('Не удалось загрузить'); }
+}
+function resetProgress() {
+  if (!confirm(t('confirmReset'))) return;
+  localStorage.removeItem('textileGameMega');
+  location.reload();
+}
+function startNewGame() {
+  localStorage.removeItem('textileGameMega');
+  state = {
+    level:1, xp:0, score:0, energy:10, maxEnergy:10,
+    streak:0, bestStreak:0, record:0,
+    totalCorrect:0, totalWrong:0,
+    levelsPlayed:0, sortLevelsDone:0, quizLevelsDone:0, upcycleLevelsDone:0, constructorDone:0,
+    perfectSorts:0, quizCorrect:0, upcycleCorrect:0,
+    ownedShop:{}, activeBoosts:{streakBonus:false,timer:false,xpDouble:false},
+    unlockedAch:[], currentSkin:"forest", unlockedSkins:["forest"],
+    modesPlayed:{sort:0,quiz:0,upcycle:0,constructor:0},
+    daily:{ date:null, tasks:[], claimed:[] },
+    todayStats:{ correctSort:0, correctQuiz:0, bestStreakToday:0, scoreToday:0 },
+    usedSortItems:[], usedQuizQuestions:[],
+  };
+  applySkin('forest');
+  updateHUD();
+  show('screenMenu');
+  updateMenuAvailability();
+  refreshMenuBadges();
+  checkDailyRefresh();
+  showDailyFact();
+}
+
+function xpForLevel(lvl) { return 100 + (lvl - 1) * 60; }
+function updateHUD() {
+  $('hud').style.display = 'flex';
+  $('xpBar').style.display = 'block';
+  $('hudLevel').textContent = state.level;
+  $('hudScore').textContent = state.score;
+  $('hudEnergy').textContent = state.energy + '/' + state.maxEnergy;
+  $('hudStreak').textContent = state.streak + ' 🔥';
+  $('hudRecord').textContent = state.record;
+  if (state.score > state.record) { state.record = state.score; $('hudRecord').textContent = state.record; }
+  const need = xpForLevel(state.level);
+  $('xpFill').style.width = Math.min(100, (state.xp / need) * 100) + '%';
+}
+function addXP(amount) {
+  state.xp += amount;
+  while (state.xp >= xpForLevel(state.level)) {
+    state.xp -= xpForLevel(state.level);
+    state.level++;
+    checkAchievements();
+    unlockNewSkins();
+    toast('🎉 ' + t('level') + ' ' + state.level + '!', 'purple');
+  }
+  updateHUD();
+}
+function addScore(amount) {
+  state.score += amount;
+  state.todayStats.scoreToday += amount;
+  if (state.score > state.record) state.record = state.score;
+  updateHUD();
+  checkAchievements();
+  checkDailyProgress();
+}
+function consumeEnergy(cost) {
+  if (state.energy < cost) return false;
+  state.energy -= cost;
+  updateHUD();
+  return true;
+}
+function updateMenuAvailability() {
+  const cards = [
+    {el:'cardSort',badge:'badgeSort',cost:1},
+    {el:'cardQuiz',badge:'badgeQuiz',cost:1},
+    {el:'cardUpcycle',badge:'badgeUpcycle',cost:2},
+    {el:'cardConstructor',badge:'badgeConstructor',cost:3},
+  ];
+  cards.forEach(c => {
+    const ok = state.energy >= c.cost;
+    $(c.el).classList.toggle('disabled', !ok);
+    const b = $(c.badge);
+    if (b) b.textContent = (ok ? '−' : '⚠ ') + c.cost + ' ⚡';
+  });
+}
+function refreshMenuBadges() {
+  checkDailyRefresh();
+  const dailyDone = state.daily.tasks.filter(tk => isDailyComplete(tk)).length;
+  $('badgeDaily').textContent = dailyDone + '/' + state.daily.tasks.length;
+  $('badgeAch').textContent = state.unlockedAch.length + '/' + ACHIEVEMENTS.length;
+  $('badgeRecord').textContent = state.record;
+  $('badgeSkins').textContent = state.unlockedSkins.length + '/' + SKINS.length;
+}
+function showDailyFact() {
+  const fact = rnd(FACTS);
+  $('dailyFactBox').innerHTML = '💡 <b>' + (LANG==='en'?'Fact':'Факт') + ':</b> ' + fact;
+}
+
+function applySkin(skinId) {
+  document.body.className = 'skin-' + skinId;
+  state.currentSkin = skinId;
+}
+function unlockNewSkins() {
+  SKINS.forEach(s => {
+    if (state.unlockedSkins.includes(s.id)) return;
+    const byLevel = s.unlockLevel && state.level >= s.unlockLevel;
+    const byAch = s.unlockAch && state.unlockedAch.includes(s.unlockAch);
+    if (byLevel || byAch) {
+      state.unlockedSkins.push(s.id);
+      toast(t('newSkin') + ' ' + s.emoji + ' ' + s.name, 'pink');
+    }
+  });
+  refreshMenuBadges();
+}
+function openSkins() {
+  const grid = $('skinGrid');
+  grid.innerHTML = '';
+  SKINS.forEach(s => {
+    const unlocked = state.unlockedSkins.includes(s.id);
+    const active = state.currentSkin === s.id;
+    const div = document.createElement('div');
+    div.className = 'skin-card' + (active ? ' active' : '') + (unlocked ? '' : ' locked');
+    const bg = `radial-gradient(circle at 30% 30%, ${s.color}dd, ${s.color}88, ${s.color}44)`;
+    let unlockText = '';
+    if (!unlocked) {
+      unlockText = s.unlockLevel ? `<div class="skin-unlock">🔓 Ур. ${s.unlockLevel}</div>` : `<div class="skin-unlock">🏆 Достижение</div>`;
+    }
+    div.innerHTML = `
+      <div class="skin-preview" style="background: ${bg};">${s.emoji}</div>
+      <div class="skin-name">${s.name}</div>
+      <div class="skin-desc">${s.desc}</div>
+      ${unlockText}
+      ${!unlocked ? '<div class="skin-lock">🔒</div>' : ''}
+    `;
+    if (unlocked) div.onclick = () => { applySkin(s.id); saveGame(); openSkins(); };
+    grid.appendChild(div);
+  });
+  $('skinCounter').textContent = state.unlockedSkins.length + '/' + SKINS.length;
+  show('screenSkins');
+}
+
+function checkAchievements() {
+  const checks = {
+    first_game: () => state.levelsPlayed >= 1,
+    first_sort: () => state.sortLevelsDone >= 1,
+    first_quiz: () => state.quizLevelsDone >= 1,
+    first_upcycle: () => state.upcycleLevelsDone >= 1,
+    first_const: () => state.constructorDone >= 1,
+    streak5: () => state.bestStreak >= 5,
+    streak10: () => state.bestStreak >= 10,
+    streak20: () => state.bestStreak >= 20,
+    streak50: () => state.bestStreak >= 50,
+    sort10: () => state.sortLevelsDone >= 10,
+    sort30: () => state.sortLevelsDone >= 30,
+    perfect1: () => state.perfectSorts >= 1,
+    perfect10: () => state.perfectSorts >= 10,
+    quiz10: () => state.quizCorrect >= 10,
+    quiz20: () => state.quizCorrect >= 20,
+    quiz50: () => state.quizCorrect >= 50,
+    upcycle5: () => state.upcycleCorrect >= 5,
+    upcycle15: () => state.upcycleCorrect >= 15,
+    constructor3: () => state.constructorDone >= 3,
+    constructor10: () => state.constructorDone >= 10,
+    score100: () => state.score >= 100,
+    score500: () => state.score >= 500,
+    score2000: () => state.score >= 2000,
+    level5: () => state.level >= 5,
+    level10: () => state.level >= 10,
+    level20: () => state.level >= 20,
+    daily1: () => state.daily.claimed.length >= 1,
+    daily3: () => state.daily.claimed.length >= 3,
+    all_modes: () => Object.values(state.modesPlayed).every(v => v > 0),
+    skin5: () => state.unlockedSkins.length >= 5,
+  };
+  ACHIEVEMENTS.forEach(a => {
+    if (!state.unlockedAch.includes(a.id) && checks[a.id] && checks[a.id]()) {
+      state.unlockedAch.push(a.id);
+      toast(t('newAch') + ' ' + a.icon + ' ' + a.name + '!', 'amber');
+    }
+  });
+  unlockNewSkins();
+  refreshMenuBadges();
+}
+function openAchievements() {
+  const grid = $('achGrid');
+  grid.innerHTML = '';
+  ACHIEVEMENTS.forEach(a => {
+    const unlocked = state.unlockedAch.includes(a.id);
+    const div = document.createElement('div');
+    div.className = 'ach-card' + (unlocked ? ' unlocked' : '');
+    div.innerHTML = `<span class="ach-icon">${unlocked ? a.icon : '🔒'}</span><div><div class="ach-name">${a.name}</div><div class="ach-desc">${a.desc}</div></div>`;
+    grid.appendChild(div);
+  });
+  $('achCounter').textContent = state.unlockedAch.length + '/' + ACHIEVEMENTS.length;
+  show('screenAch');
+}
+
+const BOTS = [
+  {name:"🌿 EcoWarrior",score:1840},
+  {name:"🌊 OceanFriend",score:1520},
+  {name:"🌸 GreenSoul",score:1180},
+  {name:"🍃 Лесной дух",score:960},
+  {name:"♻️ RecycleKing",score:750},
+  {name:"🌍 EarthGuard",score:530},
+  {name:"🌱 Sprout",score:320},
+  {name:"🧵 ThreadMaster",score:210},
+];
+function openLeaderboard() {
+  const all = [...BOTS, {name:"⭐ " + t('you'),score:state.record,you:true}];
+  all.sort((a,b) => b.score - a.score);
+  const box = $('lbList');
+  box.innerHTML = '';
+  all.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'lb-row' + (p.you ? ' you' : '');
+    div.innerHTML = `<div class="lb-rank">${i+1}</div><div class="lb-name">${p.name}</div><div class="lb-score">${p.score} ⭐</div>`;
+    box.appendChild(div);
+  });
+  show('screenLeaderboard');
+}
+
+const DAILY_TEMPLATES = [
+  {id:"play3",icon:"🎮",name:"Активный игрок",desc:"Сыграй 3 раунда",goal:3,reward:30,track:"levelsPlayed"},
+  {id:"sort5",icon:"👕",name:"Сортировщик",desc:"Разбери 5 предметов правильно",goal:5,reward:40,track:"correctSort"},
+  {id:"quiz3",icon:"🧠",name:"Умник",desc:"Ответь верно на 3 вопроса",goal:3,reward:40,track:"correctQuiz"},
+  {id:"streak5",icon:"🔥",name:"В ударе",desc:"Достигни серии из 5",goal:5,reward:50,track:"bestStreakToday"},
+  {id:"score100",icon:"⭐",name:"Заработок",desc:"Набери 100 очков",goal:100,reward:60,track:"scoreToday"},
+];
+function todayKey() { return new Date().toISOString().slice(0,10); }
+function checkDailyRefresh() {
+  const today = todayKey();
+  if (state.daily.date !== today) {
+    state.daily = {
+      date: today,
+      tasks: shuffle(DAILY_TEMPLATES).slice(0,3).map(tk => ({...tk, progress:0})),
+      claimed: [],
+    };
+    state.todayStats = { correctSort:0, correctQuiz:0, bestStreakToday:0, scoreToday:0 };
+    saveGame();
+  }
+}
+function isDailyComplete(task) {
+  const stats = state.todayStats;
+  if (task.track === 'levelsPlayed') return state.levelsPlayed >= task.goal;
+  if (task.track === 'correctSort') return stats.correctSort >= task.goal;
+  if (task.track === 'correctQuiz') return stats.correctQuiz >= task.goal;
+  if (task.track === 'bestStreakToday') return stats.bestStreakToday >= task.goal;
+  if (task.track === 'scoreToday') return stats.scoreToday >= task.goal;
+  return false;
+}
+function checkDailyProgress() { checkDailyRefresh(); refreshMenuBadges(); }
+function openDaily() {
+  checkDailyRefresh();
+  const list = $('dailyList');
+  list.innerHTML = '';
+  state.daily.tasks.forEach(task => {
+    const done = isDailyComplete(task);
+    const claimed = state.daily.claimed.includes(task.id);
+    const prog = getDailyProgress(task);
+    const div = document.createElement('div');
+    div.className = 'daily-item' + (done ? ' done' : '');
+    div.innerHTML = `
+      <span class="daily-icon">${task.icon}</span>
+      <div class="daily-info">
+        <div class="daily-name">${task.name}</div>
+        <div class="daily-desc">${task.desc}</div>
+        <div class="daily-progress">${t('progress')}: ${Math.min(prog,task.goal)}/${task.goal} · +${task.reward} ⭐</div>
+      </div>
+      <button class="daily-claim${claimed ? ' claimed' : ''}" ${(!done||claimed) ? 'disabled' : ''}>
+        ${claimed ? '✓ ' + t('claimed') : t('claim')}
+      </button>
+    `;
+    if (done && !claimed) div.querySelector('.daily-claim').onclick = () => claimDaily(task);
+    list.appendChild(div);
+  });
+  show('screenDaily');
+}
+function getDailyProgress(task) {
+  const stats = state.todayStats;
+  if (task.track === 'levelsPlayed') return state.levelsPlayed;
+  if (task.track === 'correctSort') return stats.correctSort;
+  if (task.track === 'correctQuiz') return stats.correctQuiz;
+  if (task.track === 'bestStreakToday') return stats.bestStreakToday;
+  if (task.track === 'scoreToday') return stats.scoreToday;
+  return 0;
+}
+function claimDaily(task) {
+  if (state.daily.claimed.includes(task.id)) return;
+  state.daily.claimed.push(task.id);
+  addScore(task.reward);
+  addXP(30);
+  toast('🎁 +' + task.reward + ' ⭐', 'amber');
+  openDaily();
+  refreshMenuBadges();
+  saveGame();
+}
+
+function startLevel(type) {
+  const costs = {sort:1,quiz:1,upcycle:2,constructor:3};
+  if (!consumeEnergy(costs[type])) { toast(t('noEnergy'), 'pink'); return; }
+  state.modesPlayed[type] = (state.modesPlayed[type] || 0) + 1;
+  if (type === 'sort') startSortLevel();
+  else if (type === 'quiz') startQuizLevel();
+  else if (type === 'upcycle') startUpcycleLevel();
+  else if (type === 'constructor') startConstructorLevel();
+}
+function quitLevel() { clearTimers(); currentSession = null; backToMenu(); }
+function clearTimers() {
+  if (sortTimer) { clearInterval(sortTimer); sortTimer = null; }
+  if (quizTimer) { clearInterval(quizTimer); quizTimer = null; }
+}
+function backToMenu() {
+  clearTimers();
+  updateHUD();
+  show('screenMenu');
+  updateMenuAvailability();
+  refreshMenuBadges();
+  saveGame();
+}
+
+function pickUniqueSortItems(count) {
+  const used = state.usedSortItems || [];
+  let available = SORT_DB.map((_, i) => i).filter(i => !used.includes(i));
+  if (available.length < count) {
+    state.usedSortItems = [];
+    available = SORT_DB.map((_, i) => i);
+  }
+  const picked = shuffle(available).slice(0, count);
+  state.usedSortItems.push(...picked);
+  if (state.usedSortItems.length >= 40) state.usedSortItems = state.usedSortItems.slice(-20);
+  return picked.map(i => SORT_DB[i]);
+}
+function pickUniqueQuiz(count) {
+  const used = state.usedQuizQuestions || [];
+  let available = QUIZ_DB.map((_, i) => i).filter(i => !used.includes(i));
+  if (available.length < count) {
+    state.usedQuizQuestions = [];
+    available = QUIZ_DB.map((_, i) => i);
+  }
+  const picked = shuffle(available).slice(0, count);
+  state.usedQuizQuestions.push(...picked);
+  if (state.usedQuizQuestions.length >= 40) state.usedQuizQuestions = state.usedQuizQuestions.slice(-20);
+  return picked.map(i => QUIZ_DB[i]);
+}
+
+function startSortLevel() {
+  const lvl = Math.min(3, 1 + Math.floor(state.sortLevelsDone / 3));
+  const count = Math.min(8, 5 + Math.floor(state.sortLevelsDone / 5));
+  const items = pickUniqueSortItems(count);
+  currentSession = {type:'sort',level:lvl,items,index:0,correct:0,wrong:0,points:0,timers:[],answers:[]};
+  state.levelsPlayed++;
+  $('sortLevelPill').textContent = t('level') + ' ' + lvl;
+  show('screenSort');
+  renderSortDots();
+  renderSortItem();
+}
+function renderSortDots() {
+  const box = $('sortDots');
+  box.innerHTML = '';
+  currentSession.items.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i < currentSession.answers.length ? (currentSession.answers[i] ? ' done' : ' wrong') : (i === currentSession.index ? ' current' : ''));
+    box.appendChild(d);
+  });
+}
+function renderSortItem() {
+  if (currentSession.index >= currentSession.items.length) return finishSortLevel();
+  const item = currentSession.items[currentSession.index];
+  $('sortIcon').textContent = item.icon;
+  $('sortName').textContent = item.name;
+  $('sortHint').textContent = '';
+  $('sortFeedback').textContent = '';
+  $('sortFeedback').className = 'feedback';
+  $('sortProgressInfo').textContent = `${t('item')} ${currentSession.index+1} ${t('of')} ${currentSession.items.length}`;
+  renderSortDots();
+  const wrap = $('sortTimerWrap');
+  if (state.activeBoosts.timer) {
+    wrap.style.display = 'block';
+    let tt = 100;
+    $('sortTimerFill').style.width = '100%';
+    currentSession.timers.forEach(x => clearInterval(x));
+    currentSession.timers = [];
+    const iv = setInterval(() => {
+      tt -= 100/80;
+      $('sortTimerFill').style.width = Math.max(0,tt) + '%';
+      if (tt <= 0) { clearInterval(iv); if ($('sortFeedback').textContent === '') answerSort('__timeout__'); }
+    }, 100);
+    currentSession.timers.push(iv);
+  } else { wrap.style.display = 'none'; }
+}
+function answerSort(choice) {
+  currentSession.timers.forEach(x => clearInterval(x));
+  currentSession.timers = [];
+  const item = currentSession.items[currentSession.index];
+  const fb = $('sortFeedback');
+  if (choice === '__timeout__') {
+    fb.textContent = t('timeOut') + ' ' + item.explain;
+    fb.className = 'feedback wrong';
+    state.streak = 0; state.totalWrong++; currentSession.wrong++;
+    currentSession.answers.push(false);
+  } else if (choice === item.answer) {
+    state.streak++;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+    if (state.streak > state.todayStats.bestStreakToday) state.todayStats.bestStreakToday = state.streak;
+    state.totalCorrect++; currentSession.correct++;
+    state.todayStats.correctSort++;
+    let pts = 15;
+    if (state.activeBoosts.streakBonus) pts += 5;
+    if (state.streak >= 3) pts += 5;
+    if (state.activeBoosts.timer) pts += 5;
+    currentSession.points += pts;
+    fb.textContent = t('correct') + ' +' + pts + ' ⭐ ' + item.explain;
+    fb.className = 'feedback correct';
+    currentSession.answers.push(true);
+    if (state.streak >= 3) fb.textContent += ' ' + t('streakBonus') + state.streak;
+  } else {
+    state.streak = 0; state.totalWrong++; currentSession.wrong++;
+    fb.textContent = t('wrong') + ' ' + item.explain;
+    fb.className = 'feedback wrong';
+    currentSession.answers.push(false);
+  }
+  updateHUD(); currentSession.index++; renderSortDots();
+  setTimeout(() => renderSortItem(), 1700);
+}
+function finishSortLevel() {
+  state.sortLevelsDone++;
+  if (currentSession.wrong === 0) state.perfectSorts++;
+  let xp = currentSession.correct * 20;
+  if (state.activeBoosts.xpDouble) xp *= 2;
+  addXP(xp);
+  addScore(currentSession.points);
+  state.activeBoosts.xpDouble = false;
+  if (currentSession.wrong === 0) addScore(30);
+  checkAchievements();
+  showCompleteScreen({
+    icon: currentSession.wrong === 0 ? '🏆' : '🌿',
+    title: currentSession.wrong === 0 ? t('perfect') : t('sort') + ' ✓',
+    score: currentSession.points + (currentSession.wrong === 0 ? 30 : 0),
+    stats: [['✅ '+t('correct'),currentSession.correct],['❌ '+t('wrong'),currentSession.wrong],['🔥 '+t('streak'),state.bestStreak],['⭐ '+t('score'),state.score]],
+    fact: rnd(FACTS),
+  });
+}
+
+function startQuizLevel() {
+  const lvl = Math.min(3, 1 + Math.floor(state.quizLevelsDone / 3));
+  const count = Math.min(5, 4 + Math.floor(state.quizLevelsDone / 10));
+  const qs = pickUniqueQuiz(count);
+  currentSession = {type:'quiz',level:lvl,questions:qs,index:0,correct:0,wrong:0,points:0,timers:[],answers:[]};
+  state.levelsPlayed++;
+  $('quizLevelPill').textContent = t('quiz') + ' · ' + lvl;
+  show('screenQuiz');
+  renderQuizDots();
+  renderQuizQuestion();
+}
+function renderQuizDots() {
+  const box = $('quizDots');
+  box.innerHTML = '';
+  currentSession.questions.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i < currentSession.answers.length ? (currentSession.answers[i] ? ' done' : ' wrong') : (i === currentSession.index ? ' current' : ''));
+    box.appendChild(d);
+  });
+}
+function renderQuizQuestion() {
+  if (currentSession.index >= currentSession.questions.length) return finishQuizLevel();
+  const q = currentSession.questions[currentSession.index];
+  $('quizQ').innerHTML = '<b>' + (currentSession.index+1) + '/' + currentSession.questions.length + '.</b> ' + q.q;
+  $('quizFactBox').innerHTML = '';
+  $('quizProgressInfo').textContent = `${t('question')} ${currentSession.index+1} ${t('of')} ${currentSession.questions.length}`;
+  const box = $('quizAnswers');
+  box.innerHTML = '';
+  const shuffled = q.answers.map((text,i) => ({text,isCorrect:i===q.correct}));
+  const final = shuffle(shuffled);
+  if (final[0].isCorrect && final.length > 1) {
+    const swapIdx = 1 + Math.floor(Math.random() * (final.length - 1));
+    [final[0], final[swapIdx]] = [final[swapIdx], final[0]];
+  }
+  final.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'answer';
+    btn.textContent = a.text;
+    btn.onclick = () => answerQuiz(a, btn, q);
+    box.appendChild(btn);
+  });
+  renderQuizDots();
+  const wrap = $('quizTimerWrap');
+  if (state.activeBoosts.timer) {
+    wrap.style.display = 'block';
+    let tt = 100;
+    $('quizTimerFill').style.width = '100%';
+    currentSession.timers.forEach(x => clearInterval(x));
+    currentSession.timers = [];
+    const iv = setInterval(() => {
+      tt -= 100/120;
+      $('quizTimerFill').style.width = Math.max(0,tt) + '%';
+      if (tt <= 0) { clearInterval(iv); if (!document.querySelector('.answer:disabled')) answerQuiz({isCorrect:false}, null, q, true); }
+    }, 100);
+    currentSession.timers.push(iv);
+  } else { wrap.style.display = 'none'; }
+}
+function answerQuiz(answer, btn, q, timeout=false) {
+  currentSession.timers.forEach(x => clearInterval(x));
+  currentSession.timers = [];
+  document.querySelectorAll('.answer').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === q.answers[q.correct]) b.classList.add('correct');
+    else if (b === btn) b.classList.add('wrong');
+  });
+  let fb;
+  if (answer.isCorrect && !timeout) {
+    state.streak++;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+    if (state.streak > state.todayStats.bestStreakToday) state.todayStats.bestStreakToday = state.streak;
+    state.totalCorrect++; state.quizCorrect++; state.todayStats.correctQuiz++;
+    currentSession.correct++;
+    let pts = 20;
+    if (state.activeBoosts.streakBonus) pts += 5;
+    if (state.streak >= 3) pts += 5;
+    if (state.activeBoosts.timer) pts += 5;
+    currentSession.points += pts;
+    fb = t('correct') + ' +' + pts;
+    currentSession.answers.push(true);
+  } else {
+    state.streak = 0; state.totalWrong++; currentSession.wrong++;
+    fb = timeout ? t('timeOut') : t('wrong');
+    currentSession.answers.push(false);
+  }
+  updateHUD(); renderQuizDots();
+  $('quizFactBox').innerHTML = '<div class="fact-card"><b>' + fb + '</b><br>💡 ' + q.fact + '</div>';
+  currentSession.index++;
+  setTimeout(() => renderQuizQuestion(), 2300);
+}
+function finishQuizLevel() {
+  state.quizLevelsDone++;
+  let xp = currentSession.correct * 25;
+  if (state.activeBoosts.xpDouble) xp *= 2;
+  addXP(xp);
+  addScore(currentSession.points);
+  state.activeBoosts.xpDouble = false;
+  checkAchievements();
+  showCompleteScreen({
+    icon: currentSession.wrong === 0 ? '🏆' : '🧠',
+    title: currentSession.wrong === 0 ? t('perfect') : t('quiz') + ' ✓',
+    score: currentSession.points,
+    stats: [['✅ '+t('correct'),currentSession.correct],['❌ '+t('wrong'),currentSession.wrong],['🔥 '+t('streak'),state.bestStreak],['⭐ '+t('score'),state.score]],
+    fact: rnd(FACTS),
+  });
+}
+
+function startUpcycleLevel() {
+  const item = rnd(UPCYCLE_DB);
+  const answers = shuffle(item.options);
+  currentSession = {type:'upcycle',item,answers,correct:0,wrong:0,points:0,answered:false};
+  state.upcycleLevelsDone++;
+  state.levelsPlayed++;
+  $('upcycleIcon').textContent = item.icon;
+  $('upcycleName').textContent = item.name;
+  $('upcycleProgressInfo').textContent = `${t('item')}: ${state.upcycleLevelsDone}`;
+  $('upcycleFeedback').textContent = '';
+  $('upcycleFeedback').className = 'feedback';
+  const box = $('upcycleAnswers');
+  box.innerHTML = '';
+  answers.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'answer';
+    btn.textContent = a.text;
+    btn.onclick = () => answerUpcycle(a, btn);
+    box.appendChild(btn);
+  });
+  show('screenUpcycle');
+}
+function answerUpcycle(answer, btn) {
+  if (currentSession.answered) return;
+  currentSession.answered = true;
+  document.querySelectorAll('#upcycleAnswers .answer').forEach(b => {
+    b.disabled = true;
+    const opt = currentSession.answers.find(x => x.text === b.textContent);
+    if (opt && opt.correct) b.classList.add('correct');
+    else if (b === btn) b.classList.add('wrong');
+  });
+  const fb = $('upcycleFeedback');
+  if (answer.correct) {
+    let pts = 25;
+    if (state.activeBoosts.streakBonus) pts += 10;
+    currentSession.points += pts;
+    state.totalCorrect++; state.upcycleCorrect++;
+    state.streak++;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+    if (state.streak > state.todayStats.bestStreakToday) state.todayStats.bestStreakToday = state.streak;
+    fb.textContent = t('success') + pts + ' ⭐ ' + answer.explain;
+    fb.className = 'feedback correct';
+  } else {
+    state.totalWrong++; state.streak = 0;
+    fb.textContent = t('wrong') + ' ' + answer.explain;
+    fb.className = 'feedback wrong';
+  }
+  addScore(currentSession.points);
+  updateHUD();
+  setTimeout(() => {
+    let xp = answer.correct ? 30 : 5;
+    if (state.activeBoosts.xpDouble) xp *= 2;
+    addXP(xp);
+    state.activeBoosts.xpDouble = false;
+    checkAchievements();
+    showCompleteScreen({
+      icon: answer.correct ? '✂️' : '📚',
+      title: answer.correct ? t('upcycle') + ' ✓' : t('wrong'),
+      score: currentSession.points,
+      stats: [['✅ '+t('correct'),answer.correct?1:0],['❌ '+t('wrong'),answer.correct?0:1],['🔥 '+t('streak'),state.bestStreak],['⭐ '+t('score'),state.score]],
+      fact: rnd(FACTS),
+    });
+  }, 2000);
+}
+
+/* ============================================================
+   CONSTRUCTOR — с подсказкой после 3 неудачных попыток
+   ============================================================ */
+function startConstructorLevel() {
+  const multiRecipes = CONSTRUCTOR_RECIPES.filter(r => r.need.length >= 2);
+  const recipe = rnd(multiRecipes);
+  currentSession = {
+    type:'constructor', recipe,
+    placed: [], correct:false, points:0, attempts:0,
+    hintShown: false,
+    parts: shuffle(recipe.parts).map((emoji, i) => ({id:i, emoji, used:false})),
+  };
+  state.levelsPlayed++;
+  $('constructorProgressInfo').textContent = `${t('recipe')}: ${state.constructorDone + 1}`;
+  $('hintBoxWrap').innerHTML = '';
+  renderConstructor();
+  show('screenConstructor');
+}
+
+function renderConstructor() {
+  const s = currentSession;
+  const tray = $('partsTray');
+  tray.innerHTML = '';
+  s.parts.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'part' + (p.used ? ' used' : '');
+    // Подсветка нужных деталей после 3 попыток
+    if (s.hintShown && s.recipe.need.includes(p.emoji) && !p.used) {
+      div.classList.add('hint-highlight');
+    }
+    div.draggable = !p.used;
+    div.dataset.id = p.id;
+    div.innerHTML = `<span>${p.emoji}</span>`;
+    if (!p.used) div.addEventListener('dragstart', e => onDragStart(e, p));
+    tray.appendChild(div);
+  });
+  const ws = $('workspaceItems');
+  ws.innerHTML = '';
+  $('workspaceHint').textContent = s.placed.length === 0 ? '🖐️ ' + t('dragHere') : '';
+  s.placed.forEach((p, idx) => {
+    const el = document.createElement('div');
+    el.className = 'placed-item';
+    el.innerHTML = `<span>${p.emoji}</span>`;
+    el.title = 'Нажми, чтобы убрать';
+    el.onclick = () => removeFromWorkspace(idx);
+    ws.appendChild(el);
+  });
+
+  // target-info: если подсказка показана — показываем реальные эмодзи
+  const targetInfo = $('targetInfo');
+  if (s.hintShown) {
+    targetInfo.innerHTML = `
+      🎯 <b>${s.recipe.target} ${s.recipe.targetName}</b>
+      <div class="need-pills">${t('needPills')} ${s.recipe.need.map(e => `<span class="need-pill filled">${e}</span>`).join('')}</div>
+    `;
+    targetInfo.classList.remove('no-hint');
+    targetInfo.classList.add('show-hint');
+  } else {
+    targetInfo.innerHTML = `
+      🎯 <b>${s.recipe.target} ${s.recipe.targetName}</b>
+      <div class="need-pills">${t('needPills')} ${s.recipe.need.map(() => '<span class="need-pill">?</span>').join('')}</div>
+    `;
+    targetInfo.classList.add('no-hint');
+    targetInfo.classList.remove('show-hint');
+  }
+
+  // Блок подсказки (текстовая)
+  const hintWrap = $('hintBoxWrap');
+  if (s.hintShown) {
+    hintWrap.innerHTML = `<div class="hint-box"><b>${t('hintTitle')}</b><br>${t('hintText')}</div>`;
+  } else {
+    hintWrap.innerHTML = '';
+  }
+
+  $('constructorFeedback').textContent = '';
+  $('constructorFeedback').className = 'feedback';
+}
+
+function removeFromWorkspace(idx) {
+  const part = currentSession.placed[idx];
+  if (!part) return;
+  part.used = false;
+  currentSession.placed.splice(idx, 1);
+  renderConstructor();
+}
+
+function onDragStart(e, part) {
+  e.dataTransfer.setData('text/plain', part.id);
+  e.dataTransfer.effectAllowed = 'move';
+  e.target.classList.add('dragging');
+  setTimeout(() => e.target.classList.remove('dragging'), 100);
+}
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  $('workspace').classList.add('over');
+}
+function onDragLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) $('workspace').classList.remove('over');
+}
+function onDrop(e) {
+  e.preventDefault();
+  $('workspace').classList.remove('over');
+  const id = parseInt(e.dataTransfer.getData('text/plain'));
+  const part = currentSession.parts.find(p => p.id === id);
+  if (!part || part.used) return;
+  part.used = true;
+  currentSession.placed.push(part);
+  renderConstructor();
+}
+function clearWorkspace() {
+  currentSession.placed.forEach(p => p.used = false);
+  currentSession.placed = [];
+  renderConstructor();
+}
+function checkConstructor() {
+  const s = currentSession;
+  const need = s.recipe.need;
+  const got = s.placed.map(p => p.emoji);
+  const needCounts = {};
+  need.forEach(x => needCounts[x] = (needCounts[x] || 0) + 1);
+  const gotCounts = {};
+  got.forEach(x => gotCounts[x] = (gotCounts[x] || 0) + 1);
+  const allFound = Object.keys(needCounts).every(k => (gotCounts[k] || 0) >= needCounts[k]);
+  const noExtra = got.length === need.length;
+  const fb = $('constructorFeedback');
+  if (allFound && noExtra) {
+    if (s.correct) return;
+    s.correct = true;
+    // Если была подсказка — очков меньше
+    s.points = s.hintShown ? 20 : 40;
+    if (state.activeBoosts.streakBonus) s.points += s.hintShown ? 5 : 15;
+    if (state.activeBoosts.timer) s.points += 5;
+    state.totalCorrect++;
+    state.constructorDone++;
+    state.streak++;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+    if (state.streak > state.todayStats.bestStreakToday) state.todayStats.bestStreakToday = state.streak;
+    fb.textContent = '🎉 ' + s.recipe.target + ' ' + s.recipe.targetName + '! ' + t('success') + s.points + ' ⭐';
+    fb.className = 'feedback correct';
+    addScore(s.points);
+    addXP(s.hintShown ? 25 : 45);
+    checkAchievements();
+    setTimeout(() => {
+      showCompleteScreen({
+        icon: s.recipe.target,
+        title: s.recipe.targetName + ' ✓',
+        score: s.points,
+        stats: [['✅ '+t('correct'),1],['❌ '+t('wrong'),s.attempts],['🔥 '+t('streak'),state.bestStreak],['⭐ '+t('score'),state.score]],
+        fact: rnd(FACTS),
+      });
+    }, 1500);
+  } else {
+    s.attempts++;
+    state.streak = 0;
+    // После 3-й неудачной попытки — показать подсказку
+    if (s.attempts >= 3 && !s.hintShown) {
+      s.hintShown = true;
+      fb.textContent = '💡 ' + t('hintText2');
+      fb.className = 'feedback info';
+      toast('💡 ' + t('hintTitle') + '!', 'amber');
+    } else {
+      fb.textContent = t('notEnough');
+      fb.className = 'feedback wrong';
+    }
+    updateHUD();
+    renderConstructor();
+    // Восстанавливаем feedback после renderConstructor
+    if (s.hintShown && s.attempts >= 3) {
+      $('constructorFeedback').textContent = '💡 ' + t('hintText2');
+      $('constructorFeedback').className = 'feedback info';
+    } else {
+      $('constructorFeedback').textContent = t('notEnough');
+      $('constructorFeedback').className = 'feedback wrong';
+    }
+  }
+}
+
+function openShop() {
+  $('shopScore').textContent = state.score;
+  renderShop();
+  show('screenShop');
+}
+function renderShop() {
+  const grid = $('shopGrid');
+  grid.innerHTML = '';
+  SHOP_ITEMS.forEach(item => {
+    const owned = state.ownedShop[item.id] || 0;
+    const alreadyOwned = !item.repeatable && owned > 0;
+    const canAfford = state.score >= item.cost && !alreadyOwned;
+    const div = document.createElement('div');
+    div.className = 'shop-item' + (alreadyOwned ? ' owned' : '');
+    div.innerHTML = `
+      <span class="shop-emoji">${item.emoji}</span>
+      <div class="shop-info">
+        <div class="shop-name">${item.name}${item.repeatable && owned>0 ? ' (×'+owned+')' : ''}</div>
+        <div class="shop-desc">${item.desc}</div>
+      </div>
+      <button class="shop-buy${alreadyOwned ? ' owned' : ''}" ${!canAfford ? 'disabled' : ''}>
+        ${alreadyOwned ? '✓' : '⭐ ' + item.cost}
+      </button>
+    `;
+    const btn = div.querySelector('.shop-buy');
+    btn.onclick = () => buyShopItem(item, alreadyOwned);
+    grid.appendChild(div);
+  });
+}
+function buyShopItem(item, alreadyOwned) {
+  if (alreadyOwned || state.score < item.cost) return;
+  state.score -= item.cost;
+  state.ownedShop[item.id] = (state.ownedShop[item.id] || 0) + 1;
+  if (item.id === 'energy1') { state.maxEnergy += 3; state.energy = state.maxEnergy; }
+  else if (item.id === 'streak') state.activeBoosts.streakBonus = true;
+  else if (item.id === 'timer') state.activeBoosts.timer = true;
+  else if (item.id === 'xpDouble') state.activeBoosts.xpDouble = true;
+  else if (item.id === 'energyMax') { state.maxEnergy += 5; state.energy = state.maxEnergy; }
+  else if (item.id === 'skinBoost') {
+    if (!state.unlockedSkins.includes('aurora')) {
+      state.unlockedSkins.push('aurora');
+      toast('🎨 Скин «Аврора» открыт!', 'pink');
+    }
+  }
+  updateHUD();
+  $('shopScore').textContent = state.score;
+  renderShop();
+  checkAchievements();
+  saveGame();
+}
+
+function showCompleteScreen({icon,title,score,stats,fact}) {
+  $('completeIcon').textContent = icon;
+  $('completeTitle').textContent = title;
+  $('completeScore').textContent = '+' + score + ' ⭐';
+  const box = $('completeStats');
+  box.innerHTML = '';
+  stats.forEach(([label,val]) => {
+    const d = document.createElement('div');
+    d.className = 'stat-line';
+    d.innerHTML = label + ': <b>' + val + '</b>';
+    box.appendChild(d);
+  });
+  $('completeFact').innerHTML = '💡 <b>' + (LANG==='en'?'Fact':'Факт') + ':</b> ' + fact;
+  show('screenComplete');
+  checkAchievements();
+  checkDailyProgress();
+  saveGame();
+}
+
+function setLang(lang) {
+  LANG = lang;
+  localStorage.setItem('textileLang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  applyTranslations();
+  refreshMenuBadges();
+  showDailyFact();
+}
+function applyTranslations() {
+  $('title').textContent = t('title');
+  $('tagline').textContent = t('tagline');
+  $('introText').innerHTML = t('intro');
+  $('introFact').innerHTML = t('introFact');
+  $('startBtn').textContent = t('start');
+  $('loadBtn').textContent = t('load');
+  $('continueBtn').textContent = t('continue');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t(key) !== key) el.textContent = t(key);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  LANG = localStorage.getItem('textileLang') || 'ru';
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === LANG);
+  });
+  applyTranslations();
+  try { if (localStorage.getItem('textileGameMega')) $('loadBtn').style.display = 'block'; } catch(e) {}
+  checkDailyRefresh();
+  showDailyFact();
+});
+</script>
+</body>
+</html>

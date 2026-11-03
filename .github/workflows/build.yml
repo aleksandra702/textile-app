@@ -25,6 +25,8 @@ jobs:
 
       - name: Install npm dependencies
         run: npm install
+        - name: Generate App Icons
+        run: npx @capacitor/assets generate --iconBackgroundColor "
 
       - name: Add Android platform
         run: npx cap add android

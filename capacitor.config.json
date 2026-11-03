@@ -1,0 +1,11 @@
+{
+  "appId": "com.aleksandra702.textile",
+  "appName": "Вторая жизнь ткани",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#e8f5e9"
+  }
+}
